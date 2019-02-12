@@ -1,0 +1,10 @@
+Flask
+gunicorn
+joblib
+ipykernel
+jupyter
+matplotlib==3.0.2
+numpy==1.15.4
+pandas==0.23.4
+scikit-learn==0.20.2
+seaborn==0.9.0

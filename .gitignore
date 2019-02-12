@@ -1,0 +1,7 @@
+.simple-cd-demo/
+
+**/__pycache__
+models/*.joblib
+!models/keep
+
+secret.json

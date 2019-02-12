@@ -1,0 +1,1 @@
+web: python train.py && gunicorn app:app
