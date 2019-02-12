@@ -10,9 +10,9 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v2-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-{{ checksum "requirements.txt" }}
             # fallback to using the latest cache if no exact match is found
-            - v2-dependencies-
+            - v1-dependencies-
       - run:
           name: install dependencies
           command: |
@@ -22,7 +22,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.venv
-          key: v2-dependencies-{{ checksum "requirements.txt" }}
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
       - run:
           name: run unit tests
           command: |
@@ -66,6 +66,7 @@ jobs:
           command: |
             gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://asia.gcr.io
             docker push asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
+            gcloud docker -- push asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
       - run:
           name: deploy app
           command: gcloud --quiet app deploy --image-url=asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
