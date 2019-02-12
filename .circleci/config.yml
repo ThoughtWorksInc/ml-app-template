@@ -64,8 +64,7 @@ jobs:
       - run:
           name: push artifact
           command: |
-            gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://asia.gcr.io
-            gcloud docker -- push asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
+            docker push asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
       - run:
           name: deploy app
           command: gcloud --quiet app deploy --image-url=asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
