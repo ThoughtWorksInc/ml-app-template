@@ -59,12 +59,10 @@ jobs:
       - setup_remote_docker
       - run: 
           name: build docker image
-          command: |
-            docker build . -t asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
+          command: docker build . -t asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
       - run:
           name: push artifact
-          command: |
-            docker push asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
+          command: docker push asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
       - run:
           name: deploy app
           command: gcloud --quiet app deploy --image-url=asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
@@ -75,5 +73,6 @@ workflows:
     jobs:
       - train_and_test
       - deploy_staging:
+          type: approval
           requires:
             - train_and_test
