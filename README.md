@@ -17,25 +17,25 @@ Before the workshop, please ensure you have done the following:
 
 1. **Fork** repository: https://github.com/davified/ci-workshop-app
 2. Clone repository: `git clone https://github.com/YOUR_USERNAME/ci-workshop-app`
+3. For mac users: run `bin/setup.sh`
 3. Start Docker on your desktop
 4. Edit the Dockerfile and replace `<your username>` and `<your email>` with your github username and email
 4. Build docker image: 
   - Mac / Linux users: `docker build . -t ai-sg-workshop`
   - Windows users: `docker build . -f Dockerfile.windows -t ai-sg-workshop`
 5. Now you're ready to run some commands!
-  - Run tests: `docker run -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bin/test.sh` - works fine
-  -- executed - `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop python train.py`
-  - Start application: `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bin/start_server.sh` - failed first time without running train.py command
-  - Stop the above daemon else it will give an error of "port already allocated"
-
-  For starting interactive sheel we have two options:
-  Option 1
   - Start interactive shell in container: `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash`
-  - Note: Windows users have to add: `--platform linux` after `docker run` (e.g. `docker run --platform linux -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash`)
-  Option 2
-  - Start a bash shell in a running container when it’s running: `docker exec -it <container-id> /bin/bash` (you can find the container id by running `docker ps`)
+  - Run any of the following commands in the docker container:
+    - Run tests: `bin/test.sh`
+    - Train model: `python train.py`
+    - Start application: `bin/start_server.sh`
+  
+Note: Windows users have to add: `--platform linux` after `docker run` (e.g. `docker run --platform linux -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash`)
+  
+6. Some other docker commands that you may find useful
+- Start a bash shell in a running container when it’s running: `docker exec -it <container-id> /bin/bash` (you can find the container id by running `docker ps`)
 
-6. We'll be doing most of our coding in the interactive shell. Anything that you used to do in your bash shell, you can also do in the interactive shell of the container. For example:
+7. We'll be doing most of our coding in the interactive shell. Anything that you used to do in your bash shell, you can also do in the interactive shell of the container. For example:
 ```shell
 # hello world
 $ echo "hello world!"
@@ -63,6 +63,8 @@ To deploy your changes, just `git commit` and `git push`! The CI pipeline (speci
   - App Engine Admin API: https://console.developers.google.com/apis/api/appengine.googleapis.com/overview?project=ai-sg-workshop
 
 #### Heroku?
+- heroku login?
+- heroku create?
 
 #### Deployment
 Some manual steps for deployment (needs to be done only once when you first deploy)
@@ -70,6 +72,6 @@ Some manual steps for deployment (needs to be done only once when you first depl
   
 
 ### TODOS:
-- split up dev requirements
+- remove unnecessary python dependencies
 - install gcloud/heroku in Dockerfile
 - create multistage build for Dockerfile: https://docs.docker.com/develop/develop-images/multistage-build/
