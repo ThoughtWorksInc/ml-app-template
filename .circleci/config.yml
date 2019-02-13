@@ -14,7 +14,7 @@ jobs:
             - v1-dependencies-
       - run:
           name: install dependencies
-          command: bin/heroku/install_dependencies.sh
+          command: bin/install_dependencies.sh
       - save_cache:
           paths:
             - .venv

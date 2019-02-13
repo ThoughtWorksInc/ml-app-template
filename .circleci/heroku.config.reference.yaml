@@ -14,14 +14,14 @@ jobs:
             - v1-dependencies-
       - run:
           name: install dependencies
-          command: bin/heroku/install_dependencies.sh
+          command: bin/install_dependencies.sh
       - save_cache:
           paths:
-            - ./.venv
+            - .venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
       - run:
           name: run unit tests
-          command: bin/test.sh  # the virtual environment is activated within the shell script
+          command: bin/test.sh
       - run:
           name: train model
           command: bin/train_model.sh
@@ -60,7 +60,10 @@ workflows:
       - deploy_staging:
           requires:
             - train_and_test
-      - deploy_prod:
+      - hold:
           type: approval
           requires:
             - deploy_staging
+      - deploy_prod:
+          requires:
+            - hold
