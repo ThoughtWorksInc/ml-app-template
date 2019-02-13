@@ -3,6 +3,7 @@ FROM python:3.6.8-slim-stretch as Base
 RUN set -x \
     && apt-get -y update \
     && apt-get -y install \
+        build-essential \
         libfreetype6-dev \
         libc-dev \
         gfortran
