@@ -50,10 +50,20 @@ $ python app.py
 To deploy your changes, just `git commit` and `git push`! The CI pipeline (specified in `.circleci/config.yml`) will do everything (train, test, deploy) for you.
 
 
-### Some manual steps:
+### One-time steps for deployment
 #### CircleCI
-- create circleci project
-- add HEROKU_API_KEY (you can obtain this by running `heroku auth:token` in the docker container) to the [CircleCI project](https://circleci.com/gh/davified/simple-cd-demo/) as an environment variable 
+- Create circleci project. Visit https://circleci.com/dashboard, login and click on 'Add Projects' on the left panel
+
+#### Heroku
+
+- Login to heroku by running: `heroku login`
+- Create a heroku project for app (staging): `heroku create ci-workshop-app-<YOUR_NAME>-staging`
+- Create a heroku project for app (prod): `heroku create ci-workshop-app-<YOUR_NAME>-prod`
+- In `.circleci/config.yml`, replace `ci-workshop-app-bob-staging` and `ci-workshop-app-bob-prod` with the names of your staging and prod apps
+- Generate a heroku auth token and copy the 'Token' value : `heroku authorizations:create`
+- On CircleCI webpage, go to your project settings (click on the gear icon on your project) and click on 'Environment Variables' on the left panel. Add the following variable:
+  - Name: HEROKU_AUTH_TOKEN
+  - Value: (paste value created from previous step)
 
 #### GCP
 - set environment vars
@@ -62,9 +72,6 @@ To deploy your changes, just `git commit` and `git push`! The CI pipeline (speci
 - enable APIs on GCP
   - App Engine Admin API: https://console.developers.google.com/apis/api/appengine.googleapis.com/overview?project=ai-sg-workshop
 
-#### Heroku?
-- heroku login?
-- heroku create?
 
 #### Deployment
 Some manual steps for deployment (needs to be done only once when you first deploy)
