@@ -65,6 +65,5 @@ workflows:
           requires:
             - deploy_staging
       - deploy_prod:
-          type: approval
           requires:
             - hold
