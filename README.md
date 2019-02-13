@@ -41,37 +41,35 @@ Note: Windows users have to add: `--platform linux` after `docker run` (e.g. `do
 $ echo "hello world!"
 
 # train model: 
-$ python train.py
+$ python src/train.py
 
 # start flask app
-$ python app.py
+$ python src/app.py
 ```
 
 To deploy your changes, just `git commit` and `git push`! The CI pipeline (specified in `.circleci/config.yml`) will do everything (train, test, deploy) for you.
 
 
-### Some manual steps:
+### One-time steps for deployment
 #### CircleCI
-- create circleci project
-- add HEROKU_API_KEY (you can obtain this by running `heroku auth:token` in the docker container) to the [CircleCI project](https://circleci.com/gh/davified/simple-cd-demo/) as an environment variable 
+- Create circleci project. Visit https://circleci.com/dashboard, login and click on 'Add Projects' on the left panel
 
-#### GCP
-- set environment vars
-  - GCLOUD_SERVICE_KEY (follow steps 1-3 of: https://cloud.google.com/sdk/docs/authorizing#authorizing_with_a_service_account)
+#### Heroku
 
-- enable APIs on GCP
-  - App Engine Admin API: https://console.developers.google.com/apis/api/appengine.googleapis.com/overview?project=ai-sg-workshop
+- Login to heroku by running: `heroku login`
+- Create a heroku project for app (staging): `heroku create ci-workshop-app-<YOUR_NAME>-staging`
+- Create a heroku project for app (prod): `heroku create ci-workshop-app-<YOUR_NAME>-prod`
+- In `.circleci/config.yml`, replace `ci-workshop-app-bob-staging` and `ci-workshop-app-bob-prod` with the names of your staging and prod apps
+- Generate a heroku auth token and copy the 'Token' value : `heroku authorizations:create`
+- On CircleCI webpage, go to your project settings (click on the gear icon on your project) and click on 'Environment Variables' on the left panel. Add the following variable:
+  - Name: HEROKU_AUTH_TOKEN
+  - Value: (paste value created from previous step)
 
-#### Heroku?
-- heroku login?
-- heroku create?
+#### GCP App Engine
+Note: Deploying to GCP App Engine takes much longer because (i) `gcloud app deploy` just takes that long (5+ minutes), (ii) we need to build a docker image of our application and that takes time (5+ minutes). If you don't want to run the following example, you can still checkout the [CircleCI config](https://gist.github.com/davified/c90cabb7e15fdb2ce5a1f6d34f37cef2) and [sample build log](https://circleci.com/gh/davified/ci-workshop-app/42)
 
-#### Deployment
-Some manual steps for deployment (needs to be done only once when you first deploy)
-- provision app for the first time: `bin/provision.sh` (this needs to be done only once and can be done from your local machine)
-  
-
-### TODOS:
-- remove unnecessary python dependencies
-- install gcloud/heroku in Dockerfile
-- create multistage build for Dockerfile: https://docs.docker.com/develop/develop-images/multistage-build/
+Steps for deploying to GCP App Engine:
+- Get secret key from GCP console (follow steps 1-3 of [instructions](https://cloud.google.com/sdk/docs/authorizing#authorizing_with_a_service_account))
+- Define environment variable in CircleCI
+  - GCLOUD_SERVICE_KEY: (copy and paste contents of secret key)
+- If deploying to app engine for the first time, enable [App Engine Admin API](https://console.developers.google.com/apis/api/appengine.googleapis.com/overview?project=ai-sg-workshop) on GCP
