@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -e
 
-echo "skipping model metrics tests for now..."
+python -m unittest src/test_model_metrics.py

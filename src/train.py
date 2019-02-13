@@ -4,19 +4,18 @@ import mlflow
 from math import sqrt
 import numpy as np
 import pandas as pd
-from sklearn import datasets
+from sklearn import datasets, metrics
 from sklearn.ensemble import RandomForestRegressor
-from sklearn import metrics 
 from sklearn.model_selection import train_test_split
 
 
 # load data
-boston = datasets.load_boston()
+data = datasets.load_boston()
 
 # preprocess data
-x = pd.DataFrame(boston.data, columns=boston.feature_names)
+x = pd.DataFrame(data.data, columns=data.feature_names)
 column_order = x.columns
-y = pd.DataFrame(boston.target, columns=["MEDV"])
+y = pd.DataFrame(data.target, columns=["MEDV"])
 x_train, x_test, y_train, y_test = train_test_split(x, y)
 
 # configure mlflow
@@ -44,5 +43,5 @@ with mlflow.start_run() as run:
   mlflow.log_metric("rmse_test", sqrt(metrics.mean_squared_error(y_true=y_test, y_pred=y_test_pred)))
   mlflow.log_metric("r2_score_test", metrics.r2_score(y_true=y_test, y_pred=y_test_pred))
 
-joblib.dump(model, 'models/linear_model.joblib') 
+joblib.dump(model, 'models/model.joblib') 
 joblib.dump(column_order, 'models/column_order.joblib')

@@ -4,7 +4,7 @@ import pandas as pd
 
 app = Flask(__name__)
 column_order = joblib.load('models/column_order.joblib') 
-model = joblib.load('models/linear_model.joblib') 
+model = joblib.load('models/model.joblib') 
 
 @app.route('/', methods=['GET'])
 def hello_world():

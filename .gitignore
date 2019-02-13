@@ -6,3 +6,6 @@ models/*.joblib
 
 # ignoring all json files in project root folder to prevent accidental commits of secrets 
 /*.json
+
+# IDE config
+.vscode
