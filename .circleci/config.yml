@@ -25,6 +25,12 @@ jobs:
       - run:
           name: run unit tests
           command: bin/test.sh
+      - run:
+          name: train model
+          command: bin/train_model.sh
+      - run:
+          name: run model metrics test
+          command: bin/test_model_metrics.sh
 
 workflows:
   version: 2
