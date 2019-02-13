@@ -26,8 +26,8 @@ Before the workshop, please ensure you have done the following:
 5. Now you're ready to run some commands!
   - Start interactive shell in container: `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash`
   - Run any of the following commands in the docker container:
-    - Run tests: `bin/test.sh`
-    - Train model: `python train.py`
+    - Run tests: `python -m unittest discover -s src/`
+    - Train model: `python src/train.py`
     - Start application: `bin/start_server.sh`
   
 Note: Windows users have to add: `--platform linux` after `docker run` (e.g. `docker run --platform linux -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash`)
