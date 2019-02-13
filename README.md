@@ -1,16 +1,17 @@
 # Continuous Intelligence Workshop
 
-A simple example to demonstrate the training, testing and deployment of ML models and a simple flask app
+A demo on how to apply continuous delivery principles to train, test and deploy ML models.
 
 ### Workshop pre-requisites
 
 Before the workshop, please ensure you have done the following:
-- A code editor of your choice. If you aren’t familiar with a code editor, you can either install [VS Code](https://code.visualstudio.com/) or [PyCharm (community edition)](https://www.jetbrains.com/pycharm/download/)
+- Install a code editor of your choice. If you aren’t familiar with a code editor, [VS Code](https://code.visualstudio.com/) or [PyCharm (community edition)](https://www.jetbrains.com/pycharm/download/) are good options.
 - Install Docker ([Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [Windows](https://docs.docker.com/docker-for-windows/install/)) (on Windows, make sure to switch to linux containers)
 - Install a REST client (e.g. [Insomnia](https://insomnia.rest/))
-- Create a [Heroku](https://heroku.com) account
-- Create a [Google Cloud Platform](https://cloud.google.com) account
-- Create a [CircleCI](https://circleci.com) account
+- Create accounts:
+  - [Heroku](https://heroku.com) (first 5 apps will be free)
+  - [Google Cloud Platform](https://cloud.google.com) (free $300 credits when you first sign up)
+  - [CircleCI](https://circleci.com) (free)
 
 ### Setup
 
