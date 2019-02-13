@@ -11,7 +11,7 @@ class TestSimpleExample(unittest.TestCase):
     import warnings
     with warnings.catch_warnings():
       warnings.simplefilter("ignore")
-      model = joblib.load(f'./models/linear_model.joblib') 
+      model = joblib.load(f'./models/model.joblib') 
 
     data = datasets.load_boston()
     x = pd.DataFrame(data.data, columns=data.feature_names)
