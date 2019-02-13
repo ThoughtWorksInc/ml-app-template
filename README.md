@@ -49,6 +49,10 @@ $ python src/app.py
 
 To deploy your changes, just `git commit` and `git push`! The CI pipeline (specified in `.circleci/config.yml`) will do everything (train, test, deploy) for you.
 
+RUN git config --global user.name '<your username>' \
+  && git config --global user.email '<your email>' \
+  && git config --global credential.helper cache
+
 
 ### One-time steps for deployment
 #### CircleCI
