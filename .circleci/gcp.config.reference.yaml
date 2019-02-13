@@ -1,5 +1,4 @@
-# Python CircleCI 2.0 configuration file
-# Check https://circleci.com/docs/2.0/language-python/ for more details
+# .circleci/config.yml
 version: 2
 jobs:
   train_and_test:
@@ -15,27 +14,20 @@ jobs:
             - v1-dependencies-
       - run:
           name: install dependencies
-          command: |
-            python3 -m venv ~/.venv
-            source ~/.venv/bin/activate
-            pip install -r requirements.txt
+          command: bin/install_dependencies.sh
       - save_cache:
           paths:
-            - ~/.venv
+            - .venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
       - run:
           name: run unit tests
-          command: |
-            source ~/.venv/bin/activate
-            bin/test.sh
+          command: bin/test.sh
       - run:
           name: train model
-          command: |
-            source ~/.venv/bin/activate
-            python train.py
+          command: bin/train_model.sh
       - run:
           name: run model metrics tests
-          command: echo "skipping metrics tests for now"
+          command: bin/test_model_metrics.sh
       - persist_to_workspace:
           root: .
           paths:
@@ -59,7 +51,7 @@ jobs:
       - setup_remote_docker
       - run: 
           name: build docker image
-          command: docker build . -t asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1 bin/test.sh
+          command: docker build . -t asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
       - run:
           name: push artifact
           command: docker push asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
@@ -73,6 +65,5 @@ workflows:
     jobs:
       - train_and_test
       - deploy_staging:
-          type: approval
           requires:
             - train_and_test
