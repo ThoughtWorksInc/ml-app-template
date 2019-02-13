@@ -9,16 +9,16 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v4-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-{{ checksum "requirements.txt" }}
             # fallback to using the latest cache if no exact match is found
-            - v4-dependencies-
+            - v1-dependencies-
       - run:
           name: install dependencies
           command: bin/install_dependencies.sh
       - save_cache:
           paths:
             - .venv
-          key: v4-dependencies-{{ checksum "requirements.txt" }}
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
       - run:
           name: run unit tests
           command: bin/test.sh
