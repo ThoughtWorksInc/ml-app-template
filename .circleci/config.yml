@@ -34,30 +34,23 @@ jobs:
             - .
   deploy_staging:
     docker:
-      - image: google/cloud-sdk
-        environment:
-          GOOGLE_PROJECT_ID: ai-sg-workshop
-          GOOGLE_COMPUTE_ZONE: asia-southeast1-a
+      - image: circleci/python:3.6.1
     steps:
       - attach_workspace:
           at: .
-      - run: 
-          name: setup google cloud SDK
-          command: |
-            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-            gcloud auth configure-docker
-      - setup_remote_docker
-      - run: 
-          name: build docker image
-          command: docker build . -t asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
       - run:
-          name: push artifact
-          command: docker push asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
+          name: deploy app to staging
+          command: bin/heroku/deploy.sh ci-workshop-app-bob-staging
+  deploy_prod:
+    docker:
+      - image: circleci/python:3.6.1
+    steps:
+      - attach_workspace:
+          at: .
       - run:
-          name: deploy app
-          command: gcloud --quiet app deploy --image-url=asia.gcr.io/ai-sg-workshop/my-app:$CIRCLE_SHA1
+          name: deploy app to prod
+          command: bin/heroku/deploy.sh ci-workshop-app-bob-prod
+
 
 workflows:
   version: 2
@@ -67,3 +60,10 @@ workflows:
       - deploy_staging:
           requires:
             - train_and_test
+      - hold:
+          type: approval
+          requires:
+            - deploy_staging
+      - deploy_prod:
+          requires:
+            - hold
