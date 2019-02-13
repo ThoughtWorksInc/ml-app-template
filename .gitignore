@@ -4,4 +4,5 @@
 models/*.joblib
 !models/keep
 
-secret.json
+# ignoring all json files in project root folder to prevent accidental commits of secrets 
+/*.json

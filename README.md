@@ -4,16 +4,19 @@ A simple example to demonstrate the training, testing and deployment of ML model
 
 ### Workshop pre-requisites
 
-Before the workshop, please install the following:
+Before the workshop, please ensure you have done the following:
 - A code editor of your choice. If you aren’t familiar with a code editor, you can either install [VS Code](https://code.visualstudio.com/) or [PyCharm (community edition)](https://www.jetbrains.com/pycharm/download/)
 - Install Docker ([Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [Windows](https://docs.docker.com/docker-for-windows/install/)) (on Windows, make sure to switch to linux containers)
 - Install a REST client (e.g. [Insomnia](https://insomnia.rest/))
+- Create a [Heroku](https://heroku.com) account
+- Create a [Google Cloud Platform](http://cloud.google.com) account
 
 ### Setup
 
 1. **Fork** repository: https://github.com/davified/ci-workshop-app
 2. Clone repository: `git clone https://github.com/YOUR_USERNAME/ci-workshop-app`
 3. Start Docker on your desktop
+4. Edit the Dockerfile and replace `<your username>` and `<your email>` with your github username and email
 4. Build docker image: 
   - Mac / Linux users: `docker build . -t ai-sg-workshop`
   - Windows users: `docker build . -f Dockerfile.windows -t ai-sg-workshop`
@@ -21,6 +24,9 @@ Before the workshop, please install the following:
   - Run tests: `docker run -v $(pwd):/app/continuous-intelligence -p 8080:8080 ai-sg-workshop bin/test.sh`
   - Start application: `docker run -it -v $(pwd):/app/continuous-intelligence -p 8080:8080 ai-sg-workshop bin/start_server.sh`
   - Start interactive shell in container: `docker run -it -v $(pwd):/app/continuous-intelligence -p 8080:8080 ai-sg-workshop bash`
+  - Note: Windows users have to add: `--platform linux` after `docker run` (e.g. `docker run --platform linux -it -v $(pwd):/app/continuous-intelligence -p 8080:8080 ai-sg-workshop bash`)
+  - Start a bash shell in a running container when it’s running: `docker exec -it <container-id> /bin/bash` (you can find the container id by running `docker ps`)
+
 6. We'll be doing most of our coding in the interactive shell. Anything that you used to do in your bash shell, you can also do in the interactive shell of the container. For example:
 ```shell
 # hello world
@@ -56,7 +62,7 @@ Some manual steps for deployment (needs to be done only once when you first depl
   
 
 ### TODOS:
-- pip freeze and set dependency versions in requirements.txt
 - split up dev requirements
 - install gcloud/heroku in Dockerfile
 - global replace `/app/continuous-intelligence` as `/home`
+- create multistage build for Dockerfile: https://docs.docker.com/develop/develop-images/multistage-build/
