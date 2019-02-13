@@ -31,9 +31,25 @@ jobs:
       - run:
           name: run model metrics test
           command: bin/test_model_metrics.sh
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  deploy_staging:
+    docker:
+      - image: circleci/python:3.6.1
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: deploy app to staging
+          command: bin/deploy_to_heroku.sh ci-workshop-app-bob-staging
 
 workflows:
   version: 2
   my_ci_pipeline:
     jobs:
       - train_and_test
+      - deploy_staging:
+          requires:
+            - train_and_test
