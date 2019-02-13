@@ -22,11 +22,11 @@ Before the workshop, please ensure you have done the following:
 4. Build docker image: 
   - Mac / Linux users: `docker build . -t ai-sg-workshop`
   - Windows users: `docker build . -f Dockerfile.windows -t ai-sg-workshop`
-5. Now you're ready to run somme commands!
-  - Run tests: `docker run -v $(pwd):/app/continuous-intelligence -p 8080:8080 ai-sg-workshop bin/test.sh`
-  - Start application: `docker run -it -v $(pwd):/app/continuous-intelligence -p 8080:8080 ai-sg-workshop bin/start_server.sh`
-  - Start interactive shell in container: `docker run -it -v $(pwd):/app/continuous-intelligence -p 8080:8080 ai-sg-workshop bash`
-  - Note: Windows users have to add: `--platform linux` after `docker run` (e.g. `docker run --platform linux -it -v $(pwd):/app/continuous-intelligence -p 8080:8080 ai-sg-workshop bash`)
+5. Now you're ready to run some commands!
+  - Run tests: `docker run -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bin/test.sh`
+  - Start application: `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bin/start_server.sh`
+  - Start interactive shell in container: `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash`
+  - Note: Windows users have to add: `--platform linux` after `docker run` (e.g. `docker run --platform linux -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash`)
   - Start a bash shell in a running container when it’s running: `docker exec -it <container-id> /bin/bash` (you can find the container id by running `docker ps`)
 
 6. We'll be doing most of our coding in the interactive shell. Anything that you used to do in your bash shell, you can also do in the interactive shell of the container. For example:
@@ -66,5 +66,4 @@ Some manual steps for deployment (needs to be done only once when you first depl
 ### TODOS:
 - split up dev requirements
 - install gcloud/heroku in Dockerfile
-- global replace `/app/continuous-intelligence` as `/home`
 - create multistage build for Dockerfile: https://docs.docker.com/develop/develop-images/multistage-build/

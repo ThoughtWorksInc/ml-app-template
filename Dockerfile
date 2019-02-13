@@ -10,12 +10,12 @@ RUN git config --global user.name '<your username>' \
   && git config --global user.email '<your email>' \
   && git config --global credential.helper cache
 
-WORKDIR /app/continuous-intelligence
-COPY requirements.txt /app/continuous-intelligence/
-RUN cd /app/continuous-intelligence && pip3 install -r requirements.txt
+WORKDIR /home/ci-workshop-app
+COPY requirements.txt /home/ci-workshop-app/
+RUN cd /home/ci-workshop-app && pip3 install -r requirements.txt
 
-COPY . /app/continuous-intelligence
+COPY . /home/ci-workshop-app
 
 EXPOSE 8080
 
-CMD ["/app/continuous-intelligence/bin/start_server.sh"]
+CMD ["/home/ci-workshop-app/bin/start_server.sh"]
