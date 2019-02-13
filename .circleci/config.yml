@@ -14,7 +14,10 @@ jobs:
             - v1-dependencies-
       - run:
           name: install dependencies
-          command: bin/install_dependencies.sh
+          command: | 
+            bin/install_dependencies.sh
+            source .venv/bin/activate
+            pip install joblib
       - save_cache:
           paths:
             - .venv
