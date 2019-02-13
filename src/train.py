@@ -40,8 +40,8 @@ with mlflow.start_run() as run:
   # log hyperparameters and metrics to mlflow
   mlflow.log_param('n_estimators', N_ESTIMATORS)
   mlflow.log_param('max_depth', MAX_DEPTH)
-  mlflow.log_metric("rmse_test", sqrt(metrics.mean_squared_error(y_true=y_test, y_pred=y_test_pred)))
-  mlflow.log_metric("r2_score_test", metrics.r2_score(y_true=y_test, y_pred=y_test_pred))
+  mlflow.log_metric("rmse_validation_data", sqrt(metrics.mean_squared_error(y_true=y_test, y_pred=y_test_pred)))
+  mlflow.log_metric("r2_score_validation_data", metrics.r2_score(y_true=y_test, y_pred=y_test_pred))
 
 joblib.dump(model, 'models/model.joblib') 
 joblib.dump(column_order, 'models/column_order.joblib')
