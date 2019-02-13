@@ -41,10 +41,10 @@ Note: Windows users have to add: `--platform linux` after `docker run` (e.g. `do
 $ echo "hello world!"
 
 # train model: 
-$ python train.py
+$ python src/train.py
 
 # start flask app
-$ python app.py
+$ python src/app.py
 ```
 
 To deploy your changes, just `git commit` and `git push`! The CI pipeline (specified in `.circleci/config.yml`) will do everything (train, test, deploy) for you.
