@@ -9,7 +9,8 @@ Before the workshop, please ensure you have done the following:
 - Install Docker ([Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [Windows](https://docs.docker.com/docker-for-windows/install/)) (on Windows, make sure to switch to linux containers)
 - Install a REST client (e.g. [Insomnia](https://insomnia.rest/))
 - Create a [Heroku](https://heroku.com) account
-- Create a [Google Cloud Platform](http://cloud.google.com) account
+- Create a [Google Cloud Platform](https://cloud.google.com) account
+- Create a [CircleCI](https://circleci.com) account
 
 ### Setup
 
