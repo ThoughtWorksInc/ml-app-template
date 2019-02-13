@@ -27,7 +27,10 @@ jobs:
           command: bin/train_model.sh
       - run:
           name: run model metrics tests
-          command: bin/test_model_metrics.sh
+          command: | 
+            source .venv/bin/activate
+            pip install joblib
+            bin/test_model_metrics.sh
       - persist_to_workspace:
           root: .
           paths:
