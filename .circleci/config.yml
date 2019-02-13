@@ -60,7 +60,11 @@ workflows:
       - deploy_staging:
           requires:
             - train_and_test
-      - deploy_prod:
+      - hold:
           type: approval
           requires:
             - deploy_staging
+      - deploy_prod:
+          type: approval
+          requires:
+            - hold
