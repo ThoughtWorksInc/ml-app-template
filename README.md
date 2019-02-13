@@ -65,20 +65,11 @@ To deploy your changes, just `git commit` and `git push`! The CI pipeline (speci
   - Name: HEROKU_AUTH_TOKEN
   - Value: (paste value created from previous step)
 
-#### GCP
-- set environment vars
-  - GCLOUD_SERVICE_KEY (follow steps 1-3 of: https://cloud.google.com/sdk/docs/authorizing#authorizing_with_a_service_account)
+#### GCP App Engine
+Note: Deploying to GCP App Engine takes much longer because (i) `gcloud app deploy` just takes that long (5+ minutes), (ii) we need to build a docker image of our application and that takes time (5+ minutes). If you don't want to run the following example, you can still checkout the [CircleCI config](https://gist.github.com/davified/c90cabb7e15fdb2ce5a1f6d34f37cef2) and [sample build log](https://circleci.com/gh/davified/ci-workshop-app/42)
 
-- enable APIs on GCP
-  - App Engine Admin API: https://console.developers.google.com/apis/api/appengine.googleapis.com/overview?project=ai-sg-workshop
-
-
-#### Deployment
-Some manual steps for deployment (needs to be done only once when you first deploy)
-- provision app for the first time: `bin/provision.sh` (this needs to be done only once and can be done from your local machine)
-  
-
-### TODOS:
-- remove unnecessary python dependencies
-- install gcloud/heroku in Dockerfile
-- create multistage build for Dockerfile: https://docs.docker.com/develop/develop-images/multistage-build/
+Steps for deploying to GCP App Engine:
+- Get secret key from GCP console (follow steps 1-3 of [instructions](https://cloud.google.com/sdk/docs/authorizing#authorizing_with_a_service_account))
+- Define environment variable in CircleCI
+  - GCLOUD_SERVICE_KEY: (copy and paste contents of secret key)
+- If deploying to app engine for the first time, enable [App Engine Admin API](https://console.developers.google.com/apis/api/appengine.googleapis.com/overview?project=ai-sg-workshop) on GCP
