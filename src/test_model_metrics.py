@@ -1,12 +1,12 @@
 import os
 import joblib
 from math import sqrt
-from unittest import TestCase
+import unittest
 from sklearn import datasets, metrics
 import pandas as pd
 
-
-class TestSimpleExample(TestCase):
+@unittest.skipUnless(os.environ.get('RUN_METRICS_TEST', '') == 'true', 'skip metrics tests when running unit tests')
+class TestSimpleExample(unittest.TestCase):
   def setUp(self):
     import warnings
     with warnings.catch_warnings():
