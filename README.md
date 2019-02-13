@@ -9,7 +9,7 @@ Before the workshop, please ensure you have done the following:
 - Install Docker ([Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [Windows](https://docs.docker.com/docker-for-windows/install/)) (on Windows, make sure to switch to linux containers)
 - Install a REST client (e.g. [Insomnia](https://insomnia.rest/))
 - Create accounts:
-  - [Heroku](https://heroku.com) (first 5 apps will be free)
+  - [Heroku](https://heroku.com) (first 5 apps will be free) 
   - [Google Cloud Platform](https://cloud.google.com) (free $300 credits when you first sign up)
   - [CircleCI](https://circleci.com) (free)
 
@@ -23,10 +23,16 @@ Before the workshop, please ensure you have done the following:
   - Mac / Linux users: `docker build . -t ai-sg-workshop`
   - Windows users: `docker build . -f Dockerfile.windows -t ai-sg-workshop`
 5. Now you're ready to run some commands!
-  - Run tests: `docker run -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bin/test.sh`
-  - Start application: `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bin/start_server.sh`
+  - Run tests: `docker run -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bin/test.sh` - works fine
+  -- executed - `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop python train.py`
+  - Start application: `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bin/start_server.sh` - failed first time without running train.py command
+  - Stop the above daemon else it will give an error of "port already allocated"
+
+  For starting interactive sheel we have two options:
+  Option 1
   - Start interactive shell in container: `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash`
   - Note: Windows users have to add: `--platform linux` after `docker run` (e.g. `docker run --platform linux -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash`)
+  Option 2
   - Start a bash shell in a running container when it’s running: `docker exec -it <container-id> /bin/bash` (you can find the container id by running `docker ps`)
 
 6. We'll be doing most of our coding in the interactive shell. Anything that you used to do in your bash shell, you can also do in the interactive shell of the container. For example:
