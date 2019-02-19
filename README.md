@@ -55,6 +55,10 @@ bin/predict.sh
 - See list of running containers: `docker ps`
 - Start a bash shell in a running container when it’s running: `docker exec -it <container-id> /bin/bash` (you can find the container id by running `docker ps`)
 
+### Errors
+
+Please refer to [FAQs](./FAQs.md) for a list of common errors that you may encounter, and how you can fix them.
+
 ### Configuring CI pipeline
 
 During the workshop, we will walk you through how to configure a CI pipeline for your project. We will specify our CI pipeline in `.circleci/config.yml`. And you can refer to `.circleci/config.heroku.reference.yaml` for the complete solution, if you wish to.
