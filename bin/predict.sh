@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
-curl --request POST http://localhost:8080/predict \
+if [[ $1 == '' ]]; then
+  base_url='http://localhost:8080'
+else
+  base_url=$1 
+fi
+
+curl --request POST "$base_url/predict" \
      --header "Content-Type: application/json" \
      --data \
               '{ 

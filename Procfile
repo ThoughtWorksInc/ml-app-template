@@ -1,1 +1,1 @@
-web: python src/train.py && gunicorn app:app
+web: python src/train.py && gunicorn src.app:app
