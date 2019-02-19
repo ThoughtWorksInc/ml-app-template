@@ -23,40 +23,44 @@ Before the workshop, please ensure you have done the following:
 4. Build docker image: 
   - Mac / Linux users: `docker build . -t ai-sg-workshop`
   - Windows users: `docker build . -f Dockerfile.windows -t ai-sg-workshop`
-5. Now you're ready to run some commands!
-  - Start interactive shell in container: `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash`
-  - Run any of the following commands in the docker container:
-    - Run tests: `python -m unittest discover -s src/`
-    - Train model: `python src/train.py`
-    - Start application: `bin/start_server.sh`
-  
-Note: Windows users have to add: `--platform linux` after `docker run` (e.g. `docker run --platform linux -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash`)
+
+### Common commands
+
+Now you're ready to run some commands!
+
+```shell
+# Start interactive shell in container:
+# Mac/Linux users:
+docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash
+
+# Windows users (add: `--platform linux` options):
+docker run --platform linux -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash
+
+# Run unit tests
+python -m unittest discover -s src/
+
+# Train model
+python src/train.py
+
+# Start flask app
+python src/app.py
+
+```
   
 6. Some other docker commands that you may find useful
 - Start a bash shell in a running container when it’s running: `docker exec -it <container-id> /bin/bash` (you can find the container id by running `docker ps`)
 
-7. We'll be doing most of our coding in the interactive shell. Anything that you used to do in your bash shell, you can also do in the interactive shell of the container. For example:
-```shell
-# hello world
-$ echo "hello world!"
+### Configuring CI pipeline
 
-# train model: 
-$ python src/train.py
+During the workshop, we will walk you through how to configure a CI pipeline for your project. We will specify our CI pipeline in `.circleci/config.yml`. And you can refer to `.circleci/config.heroku.reference.yaml` for the complete solution, if you wish to.
 
-# start flask app
-$ python src/app.py
-```
+### Deploying changes
 
-To deploy your changes, just `git commit` and `git push`! The CI pipeline (specified in `.circleci/config.yml`) will do everything (train, test, deploy) for you.
-
-RUN git config --global user.name '<your username>' \
-  && git config --global user.email '<your email>' \
-  && git config --global credential.helper cache
-
+Once you have set up the CI pipeline in the workshop, you only need to `git add`, `git commit` and `git push`, and the CI pipeline will do everything (train, test, deploy) for you.
 
 ### One-time steps for deployment
 #### CircleCI
-- Create circleci project. Visit https://circleci.com/dashboard, login and click on 'Add Projects' on the left panel
+- Create circleci project. Visit https://circleci.com/dashboard, login and click on 'Add Projects' on the left panel. Click on 'Set up project' for `ci-workshop-app`
 
 #### Heroku
 
