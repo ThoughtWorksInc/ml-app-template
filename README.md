@@ -32,7 +32,6 @@ Now you're ready to run some commands!
 # Start interactive shell in container:
 # Mac/Linux users:
 docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash
-
 # Windows users (add: `--platform linux` options):
 docker run --platform linux -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash
 
@@ -45,9 +44,15 @@ python src/train.py
 # Start flask app
 python src/app.py
 
+# Make requests to your app
+# 1. In your browser, visit http://localhost:8080
+# 2. In another terminal in the container, run:
+bin/predict.sh
+
 ```
-  
+
 6. Some other docker commands that you may find useful
+- See list of running containers: `docker ps`
 - Start a bash shell in a running container when it’s running: `docker exec -it <container-id> /bin/bash` (you can find the container id by running `docker ps`)
 
 ### Configuring CI pipeline
