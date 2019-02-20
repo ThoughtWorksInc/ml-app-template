@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
-RUN apt-get update \
-  && apt-get install -y python3-pip python3-dev git curl \
+RUN apt-get update
+RUN apt-get install -y python3-pip python3-dev python3-venv git curl \
   && cd /usr/local/bin \
   && ln -s /usr/bin/python3 python \
   && pip3 install --upgrade pip
@@ -12,7 +12,8 @@ RUN git config --global user.name '<your username>' \
 
 WORKDIR /home/ci-workshop-app
 COPY requirements.txt /home/ci-workshop-app/
-RUN cd /home/ci-workshop-app && pip3 install -r requirements.txt
+COPY bin/install_dependencies.sh /home/ci-workshop-app/
+RUN /home/ci-workshop-app/install_dependencies.sh
 
 COPY . /home/ci-workshop-app
 
