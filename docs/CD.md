@@ -185,3 +185,4 @@ ___
 - On CircleCI webpage, go to your project settings (click on the gear icon on your project) and click on 'Environment Variables' on the left panel. Add the following variable:
   - Name: HEROKU_AUTH_TOKEN
   - Value: (paste value created from previous step)
+- On CircleCI's workflows page, find the failed workflow and click on 'Rerun' 
