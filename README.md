@@ -61,7 +61,7 @@ Please refer to [FAQs](./docs/FAQs.md) for a list of common errors that you may 
 
 ### Configuring CD pipeline
 
-Instructions for setting up your CD pipeline are in [docs/CD.md](./docs/CD.md.).
+Instructions for setting up your CD pipeline are in [docs/CD.md](./docs/CD.md).
 
 Once the CD pipeline is set up, you only need to `git add`, `git commit` and `git push` your code changes, and the CD pipeline will do everything (train, test, deploy) for you.
 
