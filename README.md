@@ -57,30 +57,15 @@ bin/predict.sh
 
 ### Errors
 
-Please refer to [FAQs](./FAQs.md) for a list of common errors that you may encounter, and how you can fix them.
+Please refer to [FAQs](./docs/FAQs.md) for a list of common errors that you may encounter, and how you can fix them.
 
-### Configuring CI pipeline
+### Configuring CD pipeline
 
-During the workshop, we will walk you through how to configure a CI pipeline for your project. We will specify our CI pipeline in `.circleci/config.yml`. And you can refer to `.circleci/config.heroku.reference.yaml` for the complete solution, if you wish to.
+Instructions for setting up your CD pipeline are in [docs/CD.md](./docs/CD.md.).
 
-### Deploying changes
+Once the CD pipeline is set up, you only need to `git add`, `git commit` and `git push` your code changes, and the CD pipeline will do everything (train, test, deploy) for you.
 
-Once you have set up the CI pipeline in the workshop, you only need to `git add`, `git commit` and `git push`, and the CI pipeline will do everything (train, test, deploy) for you.
 
-### One-time steps for deployment
-#### CircleCI
-- Create circleci project. Visit https://circleci.com/dashboard, login and click on 'Add Projects' on the left panel. Click on 'Set up project' for `ci-workshop-app`
-
-#### Heroku
-
-- Login to heroku by running: `heroku login`
-- Create a heroku project for app (staging): `heroku create ci-workshop-app-<YOUR_NAME>-staging`
-- Create a heroku project for app (prod): `heroku create ci-workshop-app-<YOUR_NAME>-prod`
-- In `.circleci/config.yml`, replace `ci-workshop-app-bob-staging` and `ci-workshop-app-bob-prod` with the names of your staging and prod apps
-- Generate a heroku auth token and copy the 'Token' value : `heroku authorizations:create`
-- On CircleCI webpage, go to your project settings (click on the gear icon on your project) and click on 'Environment Variables' on the left panel. Add the following variable:
-  - Name: HEROKU_AUTH_TOKEN
-  - Value: (paste value created from previous step)
 
 #### GCP App Engine
 Note: Deploying to GCP App Engine takes much longer because (i) `gcloud app deploy` just takes that long (5+ minutes), (ii) we need to build a docker image of our application and that takes time (5+ minutes). If you don't want to run the following example, you can still checkout the [CircleCI config](https://gist.github.com/davified/c90cabb7e15fdb2ce5a1f6d34f37cef2) and [sample build log](https://circleci.com/gh/davified/ci-workshop-app/42)
