@@ -60,10 +60,10 @@ workflows:
       - deploy_staging:
           requires:
             - train_and_test
-      - trigger_deploy_to_prod:
+      - trigger_deploy:
           type: approval
           requires:
             - deploy_staging
       - deploy_prod:
           requires:
-            - trigger_deploy_to_prod
+            - trigger_deploy
