@@ -5,6 +5,7 @@ During the workshop, we will walk you through how to configure a CD pipeline for
 ### Steps to do before the workshop
 - Create CircleCI account: https://circleci.com/ (free)
 - Create heroku account: https://heroku.com/ (free)
+- Fork this repository: https://github.com/davified/ci-workshop-app
 
 ### One-time manual steps
 #### CircleCI
@@ -15,6 +16,7 @@ During the workshop, we will walk you through how to configure a CD pipeline for
 - Create a heroku project for app (staging): `heroku create ci-workshop-app-<YOUR_NAME>-staging`
 - Create a heroku project for app (prod): `heroku create ci-workshop-app-<YOUR_NAME>-prod`
 
+___
 
 ### Let's build our CD pipeline!
 
@@ -54,6 +56,8 @@ workflows:
     jobs:
       - hello_world
 ```
+
+___
 
 #### Iteration 2: Train and test
 
@@ -113,6 +117,8 @@ workflows:
       - train_and_test
 ```
 
+___
+
 #### Iteration 3: Deploy to staging and production
 
 Let's deploy our app to staging and production!
@@ -170,6 +176,8 @@ workflows:
           requires:
             - trigger_deploy
 ```
+
+___
 
 #### Iteration 4: Deploy to production (for real)
 
