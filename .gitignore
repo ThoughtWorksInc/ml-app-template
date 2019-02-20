@@ -1,4 +1,4 @@
-.simple-cd-demo/
+.venv/
 
 **/__pycache__
 models/*.joblib
@@ -8,4 +8,5 @@ models/*.joblib
 /*.json
 
 # IDE config
-.vscode
+.vscode/
+.idea/
