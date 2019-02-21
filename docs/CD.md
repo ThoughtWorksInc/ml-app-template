@@ -12,7 +12,7 @@ During the workshop, we will walk you through how to configure a CD pipeline for
 - Create circleci project. Visit https://circleci.com/dashboard, login and click on 'Add Projects' on the left panel. Click on 'Set up project' for `ci-workshop-app`
 
 #### Heroku
-- Login to heroku by running: `heroku login`
+- Login to heroku by running: `heroku login --interactive`
 - Create a heroku project for app (staging): `heroku create ci-workshop-app-<YOUR_NAME>-staging`
 - Create a heroku project for app (prod): `heroku create ci-workshop-app-<YOUR_NAME>-prod`
 
