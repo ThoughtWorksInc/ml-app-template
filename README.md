@@ -21,8 +21,8 @@ Before the workshop, please ensure you have done the following:
 3. Start Docker on your desktop
 4. Edit the Dockerfile and replace `<your username>` and `<your email>` with your github username and email
 4. Build docker image: 
-  - Mac / Linux users: `docker build . -t ai-sg-workshop`
-  - Windows users: `docker build . -f Dockerfile.windows -t ai-sg-workshop`
+  - Mac / Linux users: `docker build . -t ai-sg-workshop --build-arg user=$(whoami)`
+  - Windows users: `docker build . -f Dockerfile.windows -t ai-sg-workshop --build-arg user=$(whoami)`
 
 ### Common commands
 
