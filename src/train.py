@@ -27,21 +27,23 @@ else:
 
 with mlflow.start_run() as run:
   # define hyperparameters
-  N_ESTIMATORS=10
-  MAX_DEPTH=10
+  N_ESTIMATORS=2
+  MAX_DEPTH=2
 
   # train model
   model = RandomForestRegressor(n_estimators=N_ESTIMATORS, max_depth=MAX_DEPTH)
   model = model.fit(x_train, y_train.values.ravel())
-  
+
   # get predictions (for evaluating the model later)
   y_test_pred = model.predict(x_test)
 
   # log hyperparameters and metrics to mlflow
   mlflow.log_param('n_estimators', N_ESTIMATORS)
   mlflow.log_param('max_depth', MAX_DEPTH)
-  mlflow.log_metric("rmse_validation_data", sqrt(metrics.mean_squared_error(y_true=y_test, y_pred=y_test_pred)))
-  mlflow.log_metric("r2_score_validation_data", metrics.r2_score(y_true=y_test, y_pred=y_test_pred))
+  rmse = sqrt(metrics.mean_squared_error(y_true=y_test, y_pred=y_test_pred))
+  r2_score = metrics.r2_score(y_true=y_test, y_pred=y_test_pred)
+  mlflow.log_metric("rmse_validation_data", rmse)
+  mlflow.log_metric("r2_score_validation_data", r2_score)
 
 joblib.dump(model, 'models/model.joblib') 
 joblib.dump(column_order, 'models/column_order.joblib')
