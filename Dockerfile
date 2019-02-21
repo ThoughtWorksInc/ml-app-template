@@ -1,7 +1,7 @@
 FROM ubuntu:latest as Base
 
-RUN apt-get update
-RUN apt-get install -y python3-pip python3-dev python3-venv git curl \
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install -y python3-pip python3-venv \
   && cd /usr/local/bin \
   && ln -s /usr/bin/python3 python \
   && pip3 install --upgrade pip
@@ -15,7 +15,7 @@ COPY . /home/ci-workshop-app
 
 FROM Base as Dev
 
-RUN apt-get update && apt-get -y install git
+RUN apt-get update && apt-get -y install git python3-dev curl
 COPY dev-requirements.txt /dev-requirements.txt
 RUN cd /home/ci-workshop-app && pip install -r /dev-requirements.txt
 
