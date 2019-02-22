@@ -57,6 +57,7 @@ jobs:
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
             gcloud auth configure-docker
             # sudo apt-get update -y && sudo apt-get install -y google-cloud-sdk kubectl
+      - setup_remote_docker
       - run:
           name: Deploy image to kubernetes
           command: bin/kubernetes/deploy.sh $CIRCLE_SHA1
