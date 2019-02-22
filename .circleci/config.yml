@@ -46,6 +46,7 @@ jobs:
           GOOGLE_PROJECT_ID: ai-sg-workshop
           GOOGLE_COMPUTE_ZONE: asia-southeast1-a
     steps:
+      - checkout
       - attach_workspace:
           at: /caches
       - run: 
@@ -64,7 +65,7 @@ workflows:
   version: 2
   my_ci_pipeline:
     jobs:
-      - build_and_test
+      # - build_and_test
       - deploy_gcp:
           requires:
             - build_and_test
