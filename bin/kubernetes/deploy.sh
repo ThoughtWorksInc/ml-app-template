@@ -22,4 +22,8 @@ docker build . -t asia.gcr.io/$gcp_project_id/$image_name:$image_tag --target Ba
 # publish docker image
 docker push asia.gcr.io/$gcp_project_id/$image_name:$image_tag
 
+# authenticate whichever agent is running this command (depends on GCLOUD_SERVICE_KEY environment variable to be set)
+gcloud container clusters get-credentials my-cluster --region asia-southeast1
+
+# deploy new image
 kubectl set image deployment/$deployment_name $image_name=asia.gcr.io/$gcp_project_id/$image_name:$image_tag
