@@ -37,3 +37,8 @@ kubectl apply -f bin/kubernetes/config/     # this applies the changes in any fi
 
 Additional information:
 - after creating your cluster, if you encounter issues authenticating / communicating with your cluster, you can get authentication credentials to interact with the cluster by running: `gcloud container clusters get-credentials my-cluster --region asia-southeast1`
+
+Further reading:
+- https://cloud.google.com/kubernetes-engine/docs/quickstart
+- https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app
+- https://cloud.google.com/kubernetes-engine/docs/how-to/stateless-apps

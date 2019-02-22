@@ -12,6 +12,7 @@ Before the workshop, please ensure you have done the following:
   - [Heroku](https://heroku.com) (first 5 apps will be free) 
   - [Google Cloud Platform](https://cloud.google.com) (free $300 credits when you first sign up)
   - [CircleCI](https://circleci.com) (free)
+- [Windows Users only] Install [git bash](https://gitforwindows.org/)
 
 ### Setup
 
@@ -67,11 +68,6 @@ Once the CD pipeline is set up, you only need to `git add`, `git commit` and `gi
 
 
 
-#### GCP App Engine
-Note: Deploying to GCP App Engine takes much longer because (i) `gcloud app deploy` just takes that long (5+ minutes), (ii) we need to build a docker image of our application and that takes time (5+ minutes). If you don't want to run the following example, you can still checkout the [CircleCI config](https://gist.github.com/davified/c90cabb7e15fdb2ce5a1f6d34f37cef2) and [sample build log](https://circleci.com/gh/davified/ci-workshop-app/42)
+#### Bonus: Deploying using Kubernetes
 
-Steps for deploying to GCP App Engine:
-- Get secret key from GCP console (follow steps 1-3 of [instructions](https://cloud.google.com/sdk/docs/authorizing#authorizing_with_a_service_account))
-- Define environment variable in CircleCI
-  - GCLOUD_SERVICE_KEY: (copy and paste contents of secret key)
-- If deploying to app engine for the first time, enable [App Engine Admin API](https://console.developers.google.com/apis/api/appengine.googleapis.com/overview?project=ai-sg-workshop) on GCP
+Instructions [here](./docs/deploy_to_kubernetes.md)
