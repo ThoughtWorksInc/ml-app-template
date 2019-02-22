@@ -14,20 +14,29 @@ jobs:
             - v1-dependencies-
       - run:
           name: install dependencies
-          command: bin/install_dependencies.sh
+          command: |
+            python -m venv .venv
+            source .venv/bin/activate
+            pip install -r requirements.txt
       - save_cache:
           paths:
             - .venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
       - run:
           name: run unit tests
-          command: bin/test.sh
+          command: |
+            source .venv/bin/activate
+            bin/test.sh
       - run:
           name: train model
-          command: bin/train_model.sh
+          command: |
+            source .venv/bin/activate
+            bin/train_model.sh
       - run:
           name: run model metrics tests
-          command: bin/test_model_metrics.sh
+          command: 
+            source .venv/bin/activate
+            bin/test_model_metrics.sh
       - persist_to_workspace:
           root: .
           paths:
