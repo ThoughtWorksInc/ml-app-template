@@ -1,69 +1,58 @@
-# .circleci/config.yml
 version: 2
 jobs:
-  train_and_test:
+  build:
+    working_directory: /app # ~/repo
     docker:
-      - image: circleci/python:3.6.1
-    working_directory: ~/repo
+      - image: docker:17.05.0-ce-git #try 18.09.1
     steps:
       - checkout
+      - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: |
+            # TODO: install gcloud and kubectl
+            # apk add --no-cache \
+            #   py-pip=9.0.0-r1
+            # pip install \
+            #   docker-compose==1.12.0 \
+            #   awscli==1.11.76
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "requirements.txt" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - v1-{{ .Branch }}
+          paths:
+            - /caches/my-cache.tar
       - run:
-          name: install dependencies
-          command: bin/install_dependencies.sh
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/my-cache.tar | true
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build . -t ci-workshop-app --cache-from=my-cache --build-arg user=$(whoami)
+            # docker build -t app .
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/my-cache.tar my-cache
       - save_cache:
+          key: v1-{{ .Branch }}-{{ epoch }}
           paths:
-            - .venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+            - /caches/my-cache.tar
       - run:
-          name: run unit tests
-          command: bin/test.sh
-      - run:
-          name: train model
-          command: bin/train_model.sh
-      - run:
-          name: run model metrics tests
-          command: bin/test_model_metrics.sh
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
-  deploy_staging:
-    docker:
-      - image: circleci/python:3.6.1
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          name: deploy app to staging
-          command: bin/deploy_to_heroku.sh ci-workshop-app-bob-staging
-  deploy_prod:
-    docker:
-      - image: circleci/python:3.6.1
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          name: deploy app to prod
-          command: bin/deploy_to_heroku.sh ci-workshop-app-bob-prod
-
-
-workflows:
-  version: 2
-  my_ci_pipeline:
-    jobs:
-      - train_and_test
-      - deploy_staging:
-          requires:
-            - train_and_test
-      - trigger_deploy:
-          type: approval
-          requires:
-            - deploy_staging
-      - deploy_prod:
-          requires:
-            - trigger_deploy
+          name: Run tests
+          command: |
+            docker run -it ci-workshop-app bin/train_model.sh
+            docker run -it ci-workshop-app bin/test.sh
+            # docker-compose -f ./docker-compose.test.yml up
+      - deploy:
+          name: Push application Docker image
+          command: |
+            echo "skipping"
+            # if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            #   login="$(aws ecr get-login)"
+            #   ${login}
+            #   docker tag app "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
+            #   docker push "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
+            # fi

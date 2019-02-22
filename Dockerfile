@@ -21,8 +21,8 @@ RUN pip install -r /home/ci-workshop-app/requirements-dev.txt
 RUN curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 
 ARG user
-RUN useradd ${user} -g root
-USER ${user}
+RUN useradd ${user:-root} -g root || true
+USER ${user:-root}
 
 EXPOSE 8080
 CMD ["/home/ci-workshop-app/bin/start_server.sh"]
