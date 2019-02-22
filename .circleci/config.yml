@@ -1,25 +1,12 @@
 version: 2
 jobs:
-  build:
+  build_and_test:
     working_directory: /app # ~/repo
     docker:
       - image: docker:17.05.0-ce-git #try 18.09.1
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: Install dependencies
-          command: |
-            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-            chmod +x ./kubectl
-            mv ./kubectl /usr/local/bin/kubectl
-
-            # TODO: install gcloud and kubectl
-            # apk add --no-cache \
-            #   py-pip=9.0.0-r1
-            # pip install \
-            #   docker-compose==1.12.0 \
-            #   awscli==1.11.76
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
@@ -33,12 +20,12 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build . -t ci-workshop-app --cache-from=my-cache --target Base
+            docker build . -t asia.gcr.io/ai-sg-workshop/ci-workshop-app:$CIRCLE_SHA1 --cache-from=my-cache --target Base
       - run:
           name: Save Docker image layer cache
           command: |
             mkdir -p /caches
-            docker save -o /caches/my-cache.tar ci-workshop-app
+            docker save -o /caches/my-cache.tar asia.gcr.io/ai-sg-workshop/ci-workshop-app:$CIRCLE_SHA1
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
@@ -46,8 +33,38 @@ jobs:
       - run:
           name: Run tests
           command: |
-            docker run -it ci-workshop-app bin/train_model.sh
-            docker run -it ci-workshop-app bin/test.sh
-      - deploy:
-          name: Push application Docker image
+            docker run -it asia.gcr.io/ai-sg-workshop/ci-workshop-app:$CIRCLE_SHA1 bin/train_model.sh
+            docker run -it asia.gcr.io/ai-sg-workshop/ci-workshop-app:$CIRCLE_SHA1 bin/test.sh
+      - persist_to_workspace:
+          root: /caches
+          paths:
+            - my-cache.tar
+  deploy_gcp:
+    docker:
+      - image: google/cloud-sdk
+        environment:
+          GOOGLE_PROJECT_ID: ai-sg-workshop
+          GOOGLE_COMPUTE_ZONE: asia-southeast1-a
+    steps:
+      - attach_workspace:
+          at: /caches
+      - run: 
+          name: setup google cloud SDK
+          command: |
+            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+            gcloud auth configure-docker
+            # sudo apt-get update -y && sudo apt-get install -y google-cloud-sdk kubectl
+      - run:
+          name: Deploy image to kubernetes
           command: bin/kubernetes/deploy.sh $CIRCLE_SHA1
+
+workflows:
+  version: 2
+  my_ci_pipeline:
+    jobs:
+      - build_and_test
+      - deploy_gcp:
+          requires:
+            - build_and_test

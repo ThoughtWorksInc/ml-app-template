@@ -14,7 +14,10 @@ image_name='ci-workshop-app'
 deployment_name='ci-workshop-app-deployment'
 
 # build image
-docker build . -t asia.gcr.io/$gcp_project_id/$image_name:$image_tag --target Base
+if [[ $CI != 'true' ]]; then
+  # skip this on CI
+  docker build . -t asia.gcr.io/$gcp_project_id/$image_name:$image_tag --target Base
+fi
 
 # publish docker image
 docker push asia.gcr.io/$gcp_project_id/$image_name:$image_tag
