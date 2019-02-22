@@ -69,7 +69,7 @@ Let's extend to pipeline to (i) run unit tests, (ii) train the model, and (iii) 
   - `bin/train_model.sh`
   - `bin/test_model_metrics.sh`
 - Get a feel of what each bash script is doing by running them:
-  - Start a bash terminal in your container: `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash`
+  - Start a bash terminal in your container: `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash`
   - In the terminal, run each of the 3 scripts above (e.g. `bin/test.sh`)
 - Copy and paste the following snippet in `.circleci/config.yml`
 - git add, commit and push your changes to your repository

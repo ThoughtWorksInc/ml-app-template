@@ -22,8 +22,8 @@ Before the workshop, please ensure you have done the following:
 3. Start Docker on your desktop
 4. Edit the Dockerfile and replace `<your username>` and `<your email>` with your github username and email
 4. Build docker image: 
-  - Mac / Linux users: `docker build . -t ai-sg-workshop --build-arg user=$(whoami)`
-  - Windows users: `docker build . -f Dockerfile.windows -t ai-sg-workshop --build-arg user=$(whoami)`
+  - Mac / Linux users: `docker build . -t ci-workshop-app --build-arg user=$(whoami)`
+  - Windows users: `docker build . -f Dockerfile.windows -t ci-workshop-app --build-arg user=$(whoami)`
 
 ### Common commands
 
@@ -32,9 +32,9 @@ Now you're ready to run some commands!
 ```shell
 # Start interactive shell in container:
 # Mac/Linux users:
-docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash
+docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
 # Windows users (add: `--platform linux` options):
-docker run --platform linux -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ai-sg-workshop bash
+docker run --platform linux -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
 
 # Run unit tests
 python -m unittest discover -s src/
