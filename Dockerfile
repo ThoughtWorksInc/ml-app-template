@@ -1,15 +1,14 @@
 FROM ubuntu:latest as Base
 
 RUN apt-get update && apt-get -y upgrade
-RUN apt-get install -y python3-pip python3-venv curl \
+RUN apt-get install -y python3-pip curl \
   && cd /usr/local/bin \
   && ln -s /usr/bin/python3 python \
   && pip3 install --upgrade pip
 
 WORKDIR /home/ci-workshop-app
 COPY requirements.txt /home/ci-workshop-app/
-COPY bin/install_dependencies.sh /home/ci-workshop-app/
-RUN /home/ci-workshop-app/install_dependencies.sh
+RUN pip install -r requirements.txt
 
 COPY . /home/ci-workshop-app
 

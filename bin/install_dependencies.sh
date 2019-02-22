@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
-# create virtual environment
-python3 -m venv .venv
+if [[ $CI == 'true' ]]; then
+  # create virtual environment
+  python3 -m venv .venv
 
-# activate virtual environment
-source .venv/bin/activate
+  # activate virtual environment
+  source .venv/bin/activate
+fi
 
-# install dependencies in virtual environment
+# install dependencies
 pip install -r requirements.txt
