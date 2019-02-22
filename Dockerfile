@@ -15,8 +15,8 @@ COPY . /home/ci-workshop-app
 FROM Base as Dev
 
 RUN apt-get -y install git python3-dev
-COPY dev-requirements.txt /home/ci-workshop-app/dev-requirements.txt
-RUN pip install -r /home/ci-workshop-app/dev-requirements.txt
+COPY requirements-dev.txt /home/ci-workshop-app/requirements-dev.txt
+RUN pip install -r /home/ci-workshop-app/requirements-dev.txt
 
 RUN curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 

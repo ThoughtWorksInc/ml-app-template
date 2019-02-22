@@ -56,17 +56,17 @@ bin/predict.sh
 - See list of running containers: `docker ps`
 - Start a bash shell in a running container when it’s running: `docker exec -it <container-id> /bin/bash` (you can find the container id by running `docker ps`)
 
-### Errors
+### FAQs
 
-Please refer to [FAQs](./docs/FAQs.md) for a list of common errors that you may encounter, and how you can fix them.
+Please refer to [FAQs](./docs/FAQs.md) for:
+- a list of common errors that you may encounter, and how you can fix them.
+- IDE configuration instructions
 
 ### Configuring CD pipeline
 
 Instructions for setting up your CD pipeline are in [docs/CD.md](./docs/CD.md).
 
 Once the CD pipeline is set up, you only need to `git add`, `git commit` and `git push` your code changes, and the CD pipeline will do everything (train, test, deploy) for you.
-
-
 
 #### Bonus: Deploying using Kubernetes
 

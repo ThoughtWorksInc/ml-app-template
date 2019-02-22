@@ -1,6 +1,15 @@
 # FAQs
 
-Common errors and how to solve them
+### IDE configuration
+To get the optimal coding workflow, we often rely on intellisense and code completion provided by our code editors. Unfortunately, this becomes [hard](https://github.com/Microsoft/vscode-python/issues/79#issuecomment-348193800) when our python virtual environment is contained within the docker container. As a workaround, you can:
+- Run `bin/configure_venv_locally.sh`. This will create a duplicate python virtual environment (by the name of `.venv-local`) on your host (i.e. your computer)
+- Configure your IDE with the python path of this virtual environment:
+  - [VS Code](https://code.visualstudio.com/docs/python/environments#_select-and-activate-an-environment)
+  - [PyCharm (community edition)](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html)
+  - PyCharm (professional edition) users: you don't need this workaround. You can follow set up your IDE to use the virtual environment in the Docker container (see [instructions])(https://www.jetbrains.com/help/pycharm/using-docker-as-a-remote-interpreter.html)
+
+
+### Common errors and how to solve them
 
 `docker run` causes the following error:
 ```shell
