@@ -65,7 +65,8 @@ workflows:
   version: 2
   my_ci_pipeline:
     jobs:
+      - deploy_gcp
       # - build_and_test
-      - deploy_gcp:
-          requires:
-            - build_and_test
+      # - deploy_gcp:
+      #     requires:
+      #       - build_and_test
