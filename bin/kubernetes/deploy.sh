@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 
 if [[ $1 == '' ]]; then
   echo "[ERROR] Usage  : $0 <image-tag>"
