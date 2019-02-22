@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ci-workshop-app-deployment
+  labels:
+    app: ci-workshop-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ci-workshop-app
+  template:
+    metadata:
+      labels:
+        app: ci-workshop-app
+    spec:
+      containers:
+      - name: ci-workshop-app
+        image: asia.gcr.io/ai-sg-workshop/ci-workshop-app
+        command: ["bin/start_server.sh"]
