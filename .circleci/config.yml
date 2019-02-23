@@ -30,11 +30,12 @@ jobs:
             docker push registry.heroku.com/david-docker-staging/web
   deploy_staging:
     docker:
-      - image: docker:17.05.0-ce-git #try 18.09.1
+      - image: circleci/python:3.6.1
     steps:
       - run:
           name: install heroku
           command: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+      - setup_remote_docker
       - run:
           name: authenticate with heroku container registry
           command: docker login --username=davified --password=$HEROKU_AUTH_TOKEN registry.heroku.com
