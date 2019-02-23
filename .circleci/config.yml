@@ -9,14 +9,11 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: Build application Docker image
-          command: docker build . -t ci-workshop-app --target Base
+          name: Build application Docker image (with ML model)
+          command: docker build . -t ci-workshop-app --target Build
       - run:
           name: run unit tests
           command: docker run -it ci-workshop-app bin/test.sh
-      - run:
-          name: train model
-          command: docker run -it ci-workshop-app bin/train_model.sh
       - run:
           name: run model metrics tests
           command: docker run -it ci-workshop-app bin/test_model_metrics.sh
