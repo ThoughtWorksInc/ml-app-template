@@ -7,6 +7,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Build application Docker image
           command: docker build . -t ci-workshop-app --target Base
