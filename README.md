@@ -6,8 +6,11 @@ A demo on how to apply continuous delivery principles to train, test and deploy 
 
 Before the workshop, please ensure you have done the following:
 - Install a code editor of your choice. If you aren’t familiar with a code editor, [VS Code](https://code.visualstudio.com/) or [PyCharm (community edition)](https://www.jetbrains.com/pycharm/download/) are good options.
-- Install Docker ([Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [Windows](https://docs.docker.com/docker-for-windows/install/)) (on Windows, make sure to switch to linux containers)
+- Install Docker
+  - [Mac users](https://docs.docker.com/docker-for-mac/install/)
 - Install a REST client (e.g. [Insomnia](https://insomnia.rest/))
+  - [Linux users](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+  - [Windows](https://docs.docker.com/docker-for-windows/install/)) (You will be prompted to create a DockerHub account. Follow the instructions in order to download Docker for Windows) (on Windows, make sure to switch to linux containers)
 - Create accounts:
   - [Heroku](https://heroku.com) (first 5 apps will be free) 
   - [Google Cloud Platform](https://cloud.google.com) (free $300 credits when you first sign up)
@@ -18,10 +21,9 @@ Before the workshop, please ensure you have done the following:
 
 1. **Fork** repository: https://github.com/davified/ci-workshop-app
 2. Clone repository: `git clone https://github.com/YOUR_USERNAME/ci-workshop-app`
-3. For mac users: run `bin/setup.sh`
 3. Start Docker on your desktop
 4. Edit the Dockerfile and replace `<your username>` and `<your email>` with your github username and email
-4. Build docker image: 
+5. Build docker image: 
   - Mac / Linux users: `docker build . -t ci-workshop-app --build-arg user=$(whoami)`
   - Windows users: `docker build . -f Dockerfile.windows -t ci-workshop-app --build-arg user=$(whoami)`
 
