@@ -1,6 +1,8 @@
-from flask import Flask, jsonify, request
-import os, joblib
+import os
+
+import joblib
 import pandas as pd
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 column_order = joblib.load('models/column_order.joblib') 
