@@ -32,16 +32,13 @@ jobs:
     docker:
       - image: circleci/python:3.6.1
     steps:
+      - checkout
       - run:
-          name: install heroku
-          command: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-      - setup_remote_docker
-      - run:
-          name: authenticate with heroku container registry
-          command: docker login --username=davified --password=$HEROKU_AUTH_TOKEN registry.heroku.com
+          name: configure heroku authentication
+          command: bin/authenticate_heroku.sh $HEROKU_AUTH_TOKEN
       - run:
           name: deploy app to staging
-          command: heroku container:release web --app=david-docker-staging
+          command: bin/deploy_heroku_container.sh david-docker-staging
           # TODO: figure out how to release a specific image
 
 workflows:
@@ -52,10 +49,3 @@ workflows:
       - deploy_staging:
           requires:
             - train_and_test
-
-# docker build
-# heroku create david-docker-staging
-# docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
-# docker push
-# heroku container:release web -a app_name
-# heroku open
