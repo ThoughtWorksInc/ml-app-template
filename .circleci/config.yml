@@ -38,7 +38,11 @@ jobs:
           command: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - run:
           name: configure heroku authentication
-          command: bin/authenticate_heroku.sh $HEROKU_AUTH_TOKEN
+          command: |
+            echo 'machine api.heroku.com' >> ~/.netrc
+            echo '  login davified@gmail.com' >> ~/.netrc
+            echo "  password $HEROKU_AUTH_TOKEN" >> ~/.netrc
+
       - run:
           name: deploy app to staging
           command: heroku container:release web -a david-docker-staging
@@ -48,8 +52,7 @@ workflows:
   version: 2
   my_ci_pipeline:
     jobs:
-      - deploy_staging
-      # - train_and_test
-      # - deploy_staging:
-      #     requires:
-      #       - train_and_test
+      - train_and_test
+      - deploy_staging:
+          requires:
+            - train_and_test
