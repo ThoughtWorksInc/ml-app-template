@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build . -t asia.gcr.io/ai-sg-workshop/ci-workshop-app:$CIRCLE_SHA1 --cache-from=my-cache --target Base
+            docker build . -t asia.gcr.io/ai-sg-workshop/ci-workshop-app:$CIRCLE_SHA1 --cache-from=my-cache --target Build
       - run:
           name: Save Docker image layer cache
           command: |

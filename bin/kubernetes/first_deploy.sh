@@ -7,7 +7,7 @@ region='asia-southeast1'
 cluster_name='my-cluster'
 
 # build image
-docker build . -t asia.gcr.io/$gcp_project_id/$image_name --target Base
+docker build . -t asia.gcr.io/$gcp_project_id/$image_name --target Build
 
 # publish docker image
 docker push asia.gcr.io/$gcp_project_id/$image_name

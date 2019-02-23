@@ -1,4 +1,4 @@
-FROM ubuntu:latest as Base
+FROM ubuntu:latest as Build
 
 RUN apt-get update && apt-get -y upgrade
 RUN apt-get install -y python3-pip curl git \
@@ -12,12 +12,10 @@ RUN pip install -r requirements.txt
 
 COPY . /home/ci-workshop-app
 
-FROM Base as Build
-
 RUN /home/ci-workshop-app/bin/train_model.sh
 CMD ["/home/ci-workshop-app/bin/start_server.sh"]
 
-FROM Base as Dev
+FROM Build as Dev
 
 RUN apt-get -y install python3-dev
 COPY requirements-dev.txt /home/ci-workshop-app/requirements-dev.txt

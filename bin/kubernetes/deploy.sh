@@ -16,7 +16,7 @@ deployment_name='ci-workshop-app-deployment'
 # build image
 # if [[ $CI != 'true' ]]; then
   # skip this on CI
-docker build . -t asia.gcr.io/$gcp_project_id/$image_name:$image_tag --target Base
+docker build . -t asia.gcr.io/$gcp_project_id/$image_name:$image_tag --target Build
 # fi
 
 # publish docker image

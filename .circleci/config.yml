@@ -13,10 +13,10 @@ jobs:
           command: docker build . -t ci-workshop-app --target Build
       - run:
           name: run unit tests
-          command: docker run -it ci-workshop-app bin/test.sh
+          command: docker run ci-workshop-app bin/test.sh
       - run:
           name: run model metrics tests
-          command: docker run -it ci-workshop-app bin/test_model_metrics.sh
+          command: docker run ci-workshop-app bin/test_model_metrics.sh
       - run:
           name: authenticate with heroku container registry
           command: docker login --username=davified --password=$HEROKU_AUTH_TOKEN registry.heroku.com
@@ -31,7 +31,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install heroku
+          name: install dependencies (heroku-cli)
           command: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - run:
           name: configure heroku authentication
@@ -39,11 +39,9 @@ jobs:
             echo 'machine api.heroku.com' >> ~/.netrc
             echo '  login davified@gmail.com' >> ~/.netrc
             echo "  password $HEROKU_AUTH_TOKEN" >> ~/.netrc
-
       - run:
           name: deploy app to staging
           command: heroku container:release web -a david-docker-staging
-          # TODO: figure out how to release a specific image
 
 workflows:
   version: 2
