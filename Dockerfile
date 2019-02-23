@@ -11,6 +11,7 @@ COPY requirements.txt /home/ci-workshop-app/
 RUN pip install -r requirements.txt
 
 COPY . /home/ci-workshop-app
+CMD ["/home/ci-workshop-app/bin/start_server.sh"]
 
 FROM Base as Dev
 

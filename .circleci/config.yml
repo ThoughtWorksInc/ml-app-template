@@ -1,76 +1,56 @@
+# .circleci/config.yml
 version: 2
 jobs:
-  build_and_test:
-    working_directory: /app # ~/repo
+  train_and_test:
+    docker:
+      - image: docker:17.05.0-ce-git #try 18.09.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Build application Docker image
+          command: docker build . -t ci-workshop-app --target Base
+      - run:
+          name: run unit tests
+          command: docker run -it ci-workshop-app bin/test.sh
+      - run:
+          name: train model
+          command: docker run -it ci-workshop-app bin/train_model.sh
+      - run:
+          name: run model metrics tests
+          command: docker run -it ci-workshop-app bin/train_model.sh
+      - run:
+          name: tag and artifact
+          command: |
+            docker tag ci-workshop-app registry.heroku.com/david-docker-staging/web  #TODO: add :$CIRCLE_SHA1
+            docker push registry.heroku.com/david-docker-staging/web
+  deploy_staging:
     docker:
       - image: docker:17.05.0-ce-git #try 18.09.1
     steps:
-      - checkout
-      - setup_remote_docker
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/my-cache.tar
       - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/my-cache.tar | true
+          name: install heroku
+          command: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - run:
-          name: Build application Docker image
-          command: |
-            docker build . -t asia.gcr.io/ai-sg-workshop/ci-workshop-app:$CIRCLE_SHA1 --cache-from=my-cache --target Base
+          name: authenticate with heroku container registry
+          command: docker login --username=davified --password=$HEROKU_AUTH_TOKEN registry.heroku.com
       - run:
-          name: Save Docker image layer cache
-          command: |
-            mkdir -p /caches
-            docker save -o /caches/my-cache.tar asia.gcr.io/ai-sg-workshop/ci-workshop-app:$CIRCLE_SHA1
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /caches/my-cache.tar
-      - run:
-          name: Run tests
-          command: |
-            docker run -it asia.gcr.io/ai-sg-workshop/ci-workshop-app:$CIRCLE_SHA1 bin/train_model.sh
-            docker run -it asia.gcr.io/ai-sg-workshop/ci-workshop-app:$CIRCLE_SHA1 bin/test.sh
-      - persist_to_workspace:
-          root: /caches
-          paths:
-            - my-cache.tar
-  deploy_gcp:
-    docker:
-      - image: google/cloud-sdk
-        environment:
-          GOOGLE_PROJECT_ID: ai-sg-workshop
-          GOOGLE_COMPUTE_ZONE: asia-southeast1-a
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /caches
-      - run: 
-          name: setup google cloud SDK
-          command: |
-            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-            gcloud auth configure-docker
-            # sudo apt-get update -y && sudo apt-get install -y google-cloud-sdk kubectl
-      - setup_remote_docker
-      - run:
-          name: Deploy image to kubernetes
-          command: bin/kubernetes/deploy.sh $CIRCLE_SHA1
+          name: deploy app to staging
+          command: heroku container:release web --app=david-docker-staging
+          # TODO: figure out how to release a specific image
 
 workflows:
   version: 2
   my_ci_pipeline:
     jobs:
-      - deploy_gcp
-      # - build_and_test
-      # - deploy_gcp:
-      #     requires:
-      #       - build_and_test
+      - train_and_test
+      - deploy_staging:
+          requires:
+            - train_and_test
 
-# TODO: try saving/loading docker image cache locally
-# TODO: update CircleCI yaml to save/load docker image 
+# docker build
+# heroku create david-docker-staging
+# docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
+# docker push
+# heroku container:release web -a app_name
+# heroku open
