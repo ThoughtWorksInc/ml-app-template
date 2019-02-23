@@ -45,7 +45,8 @@ workflows:
   version: 2
   my_ci_pipeline:
     jobs:
+      - deploy_staging
       # - train_and_test
-      - deploy_staging:
-          requires:
-            - train_and_test
+      # - deploy_staging:
+      #     requires:
+      #       - train_and_test
