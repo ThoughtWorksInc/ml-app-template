@@ -14,22 +14,22 @@ jobs:
           paths:
             - /caches/my-docker-image.tar
       - run:
-        name: Load Docker image layer cache
-        command: |
-          set +o pipefail
-          docker load -i /caches/my-docker-image.tar | true
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/my-docker-image.tar | true
       - run:
           name: Build application Docker image (with ML model)
           command: docker build . -t ci-workshop-app --cache-from=ci-workshop-app --target Build
       - run:
-        name: Save Docker image layer cache
-        command: |
-          mkdir -p /caches
-          docker save -o /caches/my-docker-image.tar ci-workshop-app
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/my-docker-image.tar ci-workshop-app
       - save_cache:
-        key: v1-{{ .Branch }}-{{ epoch }}
-        paths:
-          - /caches/my-docker-image.tar
+          key: v1-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/my-docker-image.tar
       - run:
           name: run unit tests
           command: docker run ci-workshop-app bin/test.sh
