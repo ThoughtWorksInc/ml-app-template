@@ -21,6 +21,9 @@ jobs:
           name: run model metrics tests
           command: docker run -it ci-workshop-app bin/train_model.sh
       - run:
+          name: authenticate with heroku container registry
+          command: docker login --username=davified --password=$HEROKU_AUTH_TOKEN registry.heroku.com
+      - run:
           name: tag and artifact
           command: |
             docker tag ci-workshop-app registry.heroku.com/david-docker-staging/web  #TODO: add :$CIRCLE_SHA1
