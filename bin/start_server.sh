@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
-gunicorn -b 0.0.0.0:8080 src.app:app
+# Use PORT environment variable if defined. Otherwise, default to 8080
+PORT="${PORT:-8080}"
+
+gunicorn -b 0.0.0.0:$PORT src.app:app
