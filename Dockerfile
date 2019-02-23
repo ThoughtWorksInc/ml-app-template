@@ -22,3 +22,4 @@ USER ${user:-root}
 
 EXPOSE 8080
 CMD ["/home/ci-workshop-app/bin/start_server.sh"]
+
