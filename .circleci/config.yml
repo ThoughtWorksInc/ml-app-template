@@ -3,7 +3,7 @@ version: 2
 jobs:
   train_and_test:
     docker:
-      - image: docker:17.05.0-ce-git #try 18.09.1
+      - image: docker:17.05.0-ce-git
     working_directory: ~/repo
     steps:
       - checkout
@@ -19,7 +19,7 @@ jobs:
           command: docker run -it ci-workshop-app bin/train_model.sh
       - run:
           name: run model metrics tests
-          command: docker run -it ci-workshop-app bin/train_model.sh
+          command: docker run -it ci-workshop-app bin/test_model_metrics.sh
       - run:
           name: authenticate with heroku container registry
           command: docker login --username=davified --password=$HEROKU_AUTH_TOKEN registry.heroku.com
