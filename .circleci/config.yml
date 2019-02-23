@@ -15,9 +15,7 @@ jobs:
             - /caches/my-docker-image.tar
       - run:
           name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/my-docker-image.tar | true
+          command: docker load -i /caches/my-docker-image.tar || true
       - run:
           name: Build application Docker image (with ML model)
           command: docker build . -t ci-workshop-app --cache-from=ci-workshop-app --target Build
