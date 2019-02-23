@@ -33,6 +33,7 @@ jobs:
       - image: circleci/python:3.6.1
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: configure heroku authentication
           command: bin/authenticate_heroku.sh $HEROKU_AUTH_TOKEN
