@@ -4,7 +4,7 @@ set -e
 heroku_app_name=$1
 container_name='david-docker-staging'
 
-curl -V -n -X PATCH https://pi.heroku.com/apps/$heroku_app_name/formation \
+curl -n -X PATCH https://pi.heroku.com/apps/$heroku_app_name/formation \
   -H "Content-Type: application/json" \
   -H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
   --data @<(cat <<EOF
