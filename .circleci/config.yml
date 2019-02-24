@@ -38,13 +38,16 @@ jobs:
           name: authenticate with heroku container registry
           command: docker login --username=davified --password=$HEROKU_AUTH_TOKEN registry.heroku.com
       - run:
-          name: tag and artifact
+          name: artifact app and model
           command: |
-            docker tag ci-workshop-app registry.heroku.com/david-docker-staging/web  #TODO: add :$CIRCLE_SHA1
-            docker push registry.heroku.com/david-docker-staging/web
+            docker tag ci-workshop-app registry.heroku.com/$HEROKU_APP_NAME/web  #TODO: add :$CIRCLE_SHA1
+            docker push registry.heroku.com/$HEROKU_APP_NAME/web
   deploy_staging:
     docker:
       - image: circleci/python:3.6.1
+    environment:
+      HEROKU_APP_NAME: david-docker-staging
+      HEROKU_ACCOUNT_EMAIL: davified@gmail.com
     steps:
       - checkout
       - run:
@@ -54,11 +57,11 @@ jobs:
           name: configure heroku authentication
           command: |
             echo 'machine api.heroku.com' >> ~/.netrc
-            echo '  login davified@gmail.com' >> ~/.netrc
+            echo "  login $HEROKU_ACCOUNT_EMAIL" >> ~/.netrc
             echo "  password $HEROKU_AUTH_TOKEN" >> ~/.netrc
       - run:
           name: deploy app to staging
-          command: heroku container:release web -a david-docker-staging
+          command: heroku container:release web -a $HEROKU_APP_NAME
 
 workflows:
   version: 2
