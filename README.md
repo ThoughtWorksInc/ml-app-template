@@ -50,8 +50,10 @@ python src/app.py
 # Make requests to your app
 # 1. In your browser, visit http://localhost:8080
 # 2. In another terminal in the container, run:
-bin/predict.sh
+bin/predict.sh http://localhost:8080
 
+# you can also use this script to test your deployed application later:
+bin/predict.sh http://my-app.herokuapp.com
 ```
 
 6. Some other docker commands that you may find useful

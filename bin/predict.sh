@@ -2,7 +2,11 @@
 set -e
 
 if [[ $1 == '' ]]; then
-  base_url='http://localhost:8080'
+  echo "[ERROR] Usage: $0 <URL>"
+  echo "[ERROR] Example: $0 http://localhost:8080"
+  echo "[ERROR] Example: $0 http://my-app.herokuapp.com"
+  echo "[ERROR] Exiting..."
+  exit 1
 else
   base_url=$1 
 fi
