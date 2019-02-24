@@ -1,0 +1,76 @@
+# .circleci/config.yml
+version: 2
+jobs:
+  train_and_test:
+    docker:
+      - image: docker:17.05.0-ce-git
+    environment:
+      HEROKU_APP_NAME: david-docker-staging
+      HEROKU_ACCOUNT_EMAIL: davified@gmail.com
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - setup_remote_docker
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
+          paths:
+            - /caches/my-docker-image.tar
+      - run:
+          name: Load Docker image layer cache
+          command: docker load -i /caches/my-docker-image.tar || true
+      - run:
+          name: Build application Docker image (with ML model)
+          command: docker build . -t ci-workshop-app --cache-from=ci-workshop-app --target Build
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/my-docker-image.tar ci-workshop-app
+      - save_cache:
+          key: v1-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/my-docker-image.tar
+      - run:
+          name: run unit tests
+          command: docker run ci-workshop-app bin/test.sh
+      - run:
+          name: run model metrics tests
+          command: docker run ci-workshop-app bin/test_model_metrics.sh
+      - run:
+          name: authenticate with heroku container registry
+          command: docker login --username=davified --password=$HEROKU_AUTH_TOKEN registry.heroku.com
+      - run:
+          name: artifact app and model
+          command: |
+            docker tag ci-workshop-app registry.heroku.com/$HEROKU_APP_NAME/web  #TODO: add :$CIRCLE_SHA1
+            docker push registry.heroku.com/$HEROKU_APP_NAME/web
+  deploy_staging:
+    docker:
+      - image: circleci/python:3.6.1
+    environment:
+      HEROKU_APP_NAME: david-docker-staging
+      HEROKU_ACCOUNT_EMAIL: davified@gmail.com
+    steps:
+      - checkout
+      - run:
+          name: install dependencies (heroku-cli)
+          command: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+      - run:
+          name: configure heroku authentication
+          command: |
+            echo 'machine api.heroku.com' >> ~/.netrc
+            echo "  login $HEROKU_ACCOUNT_EMAIL" >> ~/.netrc
+            echo "  password $HEROKU_AUTH_TOKEN" >> ~/.netrc
+      - run:
+          name: deploy app to staging
+          command: heroku container:release web -a $HEROKU_APP_NAME
+
+workflows:
+  version: 2
+  my_ci_pipeline:
+    jobs:
+      - train_and_test
+      - deploy_staging:
+          requires:
+            - train_and_test
