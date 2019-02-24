@@ -4,6 +4,9 @@ jobs:
   train_and_test:
     docker:
       - image: docker:17.05.0-ce-git
+    environment:
+      HEROKU_APP_NAME: david-docker-staging
+      HEROKU_ACCOUNT_EMAIL: davified@gmail.com
     working_directory: ~/repo
     steps:
       - checkout
