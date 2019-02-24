@@ -8,50 +8,32 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      # - restore_cache:
-      #     keys:
-      #       - v1-{{ .Branch }}
-      #     paths:
-      #       - /caches/my-docker-image.tar
-      # - run:
-      #     name: Load Docker image layer cache
-      #     command: docker load -i /caches/my-docker-image.tar || true
-      # - run:
-      #     name: Build application Docker image
-      #     command: docker build . -t ci-workshop-app --cache-from=ci-workshop-app --target Build
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
+          paths:
+            - /caches/my-docker-image.tar
       - run:
-          name: Build application Docker image
-          command: docker build . -t ci-workshop-app --target Build
-      # - run:
-      #     name: Save Docker image layer cache
-      #     command: |
-      #       mkdir -p /caches
-      #       docker save -o /caches/my-docker-image.tar ci-workshop-app
-      # - save_cache:
-      #     key: v1-{{ .Branch }}-{{ epoch }}
-      #     paths:
-      #       - /caches/my-docker-image.tar
+          name: Load Docker image layer cache
+          command: docker load -i /caches/my-docker-image.tar || true
+      - run:
+          name: Build application Docker image (with ML model)
+          command: docker build . -t ci-workshop-app --cache-from=ci-workshop-app --target Build
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/my-docker-image.tar ci-workshop-app
+      - save_cache:
+          key: v1-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/my-docker-image.tar
       - run:
           name: run unit tests
           command: docker run ci-workshop-app bin/test.sh
       - run:
-          name: Train model
-          command: docker run ci-workshop-app bin/train_model.sh
-      - run:
-          name: debugging
-          command: |
-            echo "===pwd: $(pwd)"
-            echo "===ls: $(ls -la)"
-            echo "===ls in docker container: $(docker run -v $(pwd):/home/ci-workshop-app/ ci-workshop-app ls)"
-      - run:
-          name: Train model (with persistence)
-          command: docker run -v $(pwd):/home/ci-workshop-app/ ci-workshop-app bin/train_model.sh
-      - run:
           name: run model metrics tests
-          command: docker run -v $(pwd):/home/ci-workshop-app/ ci-workshop-app bin/test_model_metrics.sh
-      - run:
-          name: Build image again with model
-          command: docker build . -t ci-workshop-app --cache-from=ci-workshop-app --target Build
+          command: docker run ci-workshop-app bin/test_model_metrics.sh
       - run:
           name: authenticate with heroku container registry
           command: docker login --username=davified --password=$HEROKU_AUTH_TOKEN registry.heroku.com

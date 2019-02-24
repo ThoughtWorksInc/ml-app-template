@@ -8,8 +8,9 @@ WORKDIR /home/ci-workshop-app
 COPY requirements.txt /home/ci-workshop-app/requirements.txt
 RUN pip install -r requirements.txt
 
-# RUN /home/ci-workshop-app/bin/train_model.sh
 COPY . /home/ci-workshop-app
+
+RUN /home/ci-workshop-app/bin/train_model.sh
 CMD ["/home/ci-workshop-app/bin/start_server.sh"]
 
 FROM Build as Dev
