@@ -31,6 +31,12 @@ jobs:
       - run:
           name: run unit tests
           command: docker run ci-workshop-app bin/test.sh
+      - run: Debug
+          name: debugging
+          command: |
+            echo "===pwd: $(pwd)"
+            echo "===ls: $(ls -la)"
+            echo "===ls in docker container: $(docker run -v $(pwd):/home/ci-workshop-app/ ci-workshop-app ls)"
       - run:
           name: Train model
           command: docker run -v $(pwd):/home/ci-workshop-app/ ci-workshop-app bin/train_model.sh
