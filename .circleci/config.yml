@@ -70,7 +70,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Deploy image to kubernetes
-          command: command: |
+          command:
             # authenticate
             gcloud container clusters get-credentials my-cluster --region asia-southeast1
             # deploy new image
