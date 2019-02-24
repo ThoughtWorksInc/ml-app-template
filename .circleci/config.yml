@@ -47,8 +47,8 @@ jobs:
       - run:
           name: artifact app and model
           command: |
-            docker tag ci-workshop-app asia.gcr.io/$GOOGLE_PROJECT_ID/$IMAGE_NAME  # :$image_tag
-            docker push asia.gcr.io/$GOOGLE_PROJECT_ID/$IMAGE_NAME                 # :$image_tag
+            docker tag ci-workshop-app asia.gcr.io/$GOOGLE_PROJECT_ID/$IMAGE_NAME:$CIRCLE_SHA1
+            docker push asia.gcr.io/$GOOGLE_PROJECT_ID/$IMAGE_NAME:$CIRCLE_SHA1
   deploy_to_gcp:
     docker:
       - image: google/cloud-sdk
@@ -75,7 +75,7 @@ jobs:
             # authenticate
             gcloud container clusters get-credentials my-cluster --region asia-southeast1
             # deploy new image
-            kubectl set image deployment/$deployment_name $image_name=asia.gcr.io/$GOOGLE_PROJECT_ID/$image_name  #:$image_tag
+            kubectl set image deployment/$deployment_name $image_name=asia.gcr.io/$GOOGLE_PROJECT_ID/$image_name:$CIRCLE_SHA1
 
 workflows:
   version: 2
