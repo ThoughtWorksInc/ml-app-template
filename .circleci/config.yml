@@ -31,7 +31,7 @@ jobs:
       - run:
           name: run unit tests
           command: docker run ci-workshop-app bin/test.sh
-      - run: Debug
+      - run:
           name: debugging
           command: |
             echo "===pwd: $(pwd)"
