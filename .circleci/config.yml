@@ -17,7 +17,7 @@ jobs:
           command: docker load -i /caches/my-docker-image.tar || true
       - run:
           name: Build application Docker image (without ML model)
-          command: docker build . -t ci-workshop-app:base --cache-from=ci-workshop-app --target Base
+          command: docker build . -t ci-workshop-app:base --cache-from=ci-workshop-app:base --target Base
       - run:
           name: Save Docker image layer cache
           command: |
