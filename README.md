@@ -37,7 +37,12 @@ $ docker build . -t ci-workshop-app --build-arg user=$(whoami)
 # Start bash shell in container
 $ docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
 ```
-<h4 style='color: red'>Pre-workshop setup stops here</h4>
+
+<h4 style='color: red'></h4>
+
+```diff
+! Pre-workshop setup stops here
+```
 
 ```shell
 ### Other useful docker commands ###
