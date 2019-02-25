@@ -3,8 +3,10 @@
 # ================================================================= #
 FROM python:3.6-slim as Base
 
-RUN apt-get update
-RUN apt-get install -y curl git
+RUN apt-get update \
+  && apt-get install -y curl git
+  
+RUN git config --global credential.helper 'cache --timeout=36000'
 
 WORKDIR /home/ci-workshop-app
 
