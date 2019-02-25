@@ -1,4 +1,4 @@
-FROM python:3.6-slim as Build
+FROM python:3.6-slim as Base
 
 RUN apt-get update
 RUN apt-get install -y curl git
@@ -9,6 +9,8 @@ COPY requirements.txt /home/ci-workshop-app/requirements.txt
 RUN pip install -r requirements.txt
 
 COPY . /home/ci-workshop-app
+
+FROM Base as Build
 
 RUN /home/ci-workshop-app/bin/train_model.sh
 CMD ["/home/ci-workshop-app/bin/start_server.sh"]
