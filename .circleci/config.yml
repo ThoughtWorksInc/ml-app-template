@@ -4,10 +4,6 @@ jobs:
     working_directory: /app # ~/repo
     docker:
       - image: google/cloud-sdk  # docker:17.05.0-ce-git
-    environment:
-      GOOGLE_PROJECT_ID: 'ai-sg-workshop'
-      GOOGLE_COMPUTE_ZONE: 'asia-southeast1-a'
-      IMAGE_NAME: 'ci-workshop-app'
     steps:
       - checkout
       - setup_remote_docker
@@ -42,43 +38,22 @@ jobs:
           command: docker run ci-workshop-app:build bin/test_model_metrics.sh
       - run: 
           name: setup google cloud SDK + authenticate
-          command: |
-            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-            gcloud auth configure-docker
+          command: bin/authenticate_gcloud.sh
       - run:
           name: push artifact to container registry
-          command: |
-            docker tag ci-workshop-app:build asia.gcr.io/$GOOGLE_PROJECT_ID/$IMAGE_NAME:$CIRCLE_SHA1
-            docker push asia.gcr.io/$GOOGLE_PROJECT_ID/$IMAGE_NAME:$CIRCLE_SHA1
+          command: bin/save_artifact_on_gcr.sh
   deploy_to_gcp:
     docker:
       - image: google/cloud-sdk
-        environment:
-          GOOGLE_PROJECT_ID: ai-sg-workshop
-          GOOGLE_COMPUTE_ZONE: asia-southeast1-a
-          deployment_name: 'ci-workshop-app-deployment'
-          image_name: 'ci-workshop-app'
     steps:
       - checkout
-      - attach_workspace:
-          at: /caches
       - run: 
           name: setup google cloud SDK + authenticate
-          command: |
-            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-            gcloud auth configure-docker
+          command: bin/authenticate_gcloud.sh
       - setup_remote_docker
       - run:
           name: Deploy image to kubernetes
-          command: |
-            # authenticate
-            gcloud container clusters get-credentials my-cluster --region asia-southeast1
-            # deploy new image
-            kubectl set image deployment/$deployment_name $image_name=asia.gcr.io/$GOOGLE_PROJECT_ID/$image_name:$CIRCLE_SHA1
+          command: bin/kubernetes/deploy.sh
 
 workflows:
   version: 2

@@ -1,29 +1,13 @@
 #!/usr/bin/env bash
 set -ex
 
-if [[ $1 == '' ]]; then
-  echo "[ERROR] Usage  : $0 <image-tag>"
-  echo "[ERROR] Example: $0 f89s0asd)"
-  echo "[ERROR] Exiting..."
-  exit 1
-fi
+GOOGLE_PROJECT_ID='ai-sg-workshop'
+GOOGLE_COMPUTE_REGION='asia-southeast1'
+IMAGE_NAME='ci-workshop-app'
+DEPLOYMENT_NAME='ci-workshop-app-deployment'
 
-image_tag=$1
-gcp_project_id='ai-sg-workshop'
-image_name='ci-workshop-app'
-deployment_name='ci-workshop-app-deployment'
-
-# build image
-# if [[ $CI != 'true' ]]; then
-  # skip this on CI
-docker build . -t asia.gcr.io/$gcp_project_id/$image_name:$image_tag --target Build
-# fi
-
-# publish docker image
-docker push asia.gcr.io/$gcp_project_id/$image_name:$image_tag
-
-# authenticate whichever agent is running this command (depends on GCLOUD_SERVICE_KEY environment variable to be set)
-gcloud container clusters get-credentials my-cluster --region asia-southeast1
+# authenticate the agent running this command (depends on GCLOUD_SERVICE_KEY environment variable to be set)
+gcloud container clusters get-credentials my-cluster --region $GOOGLE_COMPUTE_REGION
 
 # deploy new image
-kubectl set image deployment/$deployment_name $image_name=asia.gcr.io/$gcp_project_id/$image_name:$image_tag
+kubectl set image deployment/$DEPLOYMENT_NAME $IMAGE_NAME=asia.gcr.io/$GOOGLE_PROJECT_ID/$IMAGE_NAME:$CIRCLE_SHA1
