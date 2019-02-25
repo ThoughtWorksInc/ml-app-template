@@ -13,7 +13,6 @@ Before the workshop, please ensure you have done the following:
   - [Windows](https://docs.docker.com/docker-for-windows/install/)) (You will be prompted to create a DockerHub account. Follow the instructions in order to download Docker for Windows) (on Windows, make sure to switch to linux containers)
 - Create accounts:
   - [Heroku](https://heroku.com) (first 5 apps will be free) 
-  - [Google Cloud Platform](https://cloud.google.com) (free $300 credits when you first sign up)
   - [CircleCI](https://circleci.com) (free)
 - [Windows Users only] Install [git bash](https://gitforwindows.org/)
 
@@ -37,6 +36,9 @@ Now you're ready to run some commands!
 docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
 # Windows users (add: `--platform linux` options):
 docker run --platform linux -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
+
+# add some color to your terminal
+source bin/color_my_terminal.sh
 
 # Run unit tests
 python -m unittest discover -s src/
