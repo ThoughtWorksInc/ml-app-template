@@ -22,33 +22,37 @@ Before the workshop, please ensure you have done the following:
 - [Windows Users only] Install [git bash](https://gitforwindows.org/). We will be using `git bash` as the terminal for the workshop.
 
 ### Setup
-```
-# Note for Windows users:
-- If you're new to Docker, please use the Git Bash terminal to run the commands below
-- If you encounter any errors, please refer to [FAQs](./docs/FAQs.md) for a list of common errors and how to fix them.
-```
 
-1. **Fork** repository: https://github.com/davified/ci-workshop-app
+Note:
+- If you encounter any errors, please refer to [FAQs](./docs/FAQs.md) for a list of common errors and how to fix them.
+- If the issue is still not fixed, please [file an issue](https://docs.google.com/forms/d/1pYlJ_m5JvUntZKT0UG5HaY4I_r1ahrhv9ZMps_zNIno/edit) here and we'll look into it.
+- [Windows users] If you're new to Docker, please use the Git Bash terminal to run the commands below
+
+Setup instructions
+
+1. Fork repository: https://github.com/davified/ci-workshop-app
 2. Clone repository: `git clone https://github.com/YOUR_USERNAME/ci-workshop-app`
 3. Start Docker on your desktop (Note: Wait for Docker to complete startup before running the subsequent commands. You'll know when startup is completed when the docker icon in your taskbar stops animating)
-4. Edit the Dockerfile and replace `<your username>` and `<your email>` with your github username and email
-5. Build docker image: 
-  - Mac / Linux users: `docker build . -t ci-workshop-app --build-arg user=$(whoami)`
-  - Windows users: `MSYS_NO_PATHCONV=1 docker build . -t ci-workshop-app --build-arg user=$(whoami)`
-
-6. Create docker image and run docker container (run this on your terminal)
+4. Build docker image
 
 ```shell
-# Build docker image
+# [Mac/Linux users]
 docker build . -t ci-workshop-app --build-arg user=$(whoami)
 
-# Start bash shell in container
+# [Windows users]
+MSYS_NO_PATHCONV=1 docker build . -t ci-workshop-app --build-arg user=$(whoami)
+```
+
+5. Start docker container
+
+```shell
 # [Mac/Linux users]
 docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
 
 # [Windows users]
 winpty docker run -it -v C:\\Users\\path\\to\\your\\ci-workshop-app:/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
 # Note: to find the path, you can run `pwd` in git bash, and manually replace forward slashes (/) with double backslashes (\\)
+
 ```
 
 ```diff
@@ -67,7 +71,7 @@ docker exec -it <container-id> bash
 Now you're ready to roll!
 
 
-### Common commands (run this in the container)
+### Common commands (run these in the container)
 
 ```shell
 # Add some color to your terminal
