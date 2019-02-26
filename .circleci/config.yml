@@ -1,9 +1,9 @@
 version: 2
 jobs:
   build_and_test:
-    working_directory: /app # ~/repo
+    working_directory: ~/repo 
     docker:
-      - image: google/cloud-sdk  # docker:17.05.0-ce-git
+      - image: google/cloud-sdk
     steps:
       - checkout
       - setup_remote_docker
