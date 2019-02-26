@@ -62,7 +62,7 @@ docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
 # Windows users (add: `--platform linux` options):
 MSYS_NO_PATHCONV=1 winpty docker run -it -v /$(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
 >>>>>>> Update windows instructions
-
+winpty docker run -it -v C:\\Users\\thoughtworks\\ci-workshop-app:/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
 # Start a bash shell in a running container when it’s running
 docker exec -it <container-id> bash
 ```
@@ -123,7 +123,14 @@ solution:
 
 
 if after running build and/or mount volume, your docker container has no files, 
-TODO: find fix
+ winpty docker run -it -v C:\\Users\\thoughtworks\\ci-workshop-app:/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
+
+
+TODO: find fix https://github.com/docker/toolbox/issues/673
 
 prefix all docker commands with MSYS_NO_PATHCONV=1
-e.g. MSYS_NO_PATHCONV=1 docker build . -t ci-workshop-app
+e.g MSYS_NO_PATHCONV=1 docker build . -t ci-workshop-app
+
+TODOs: update to /bin/bash
+
+TODO: add note on dos2unix for any changes to shell scripts
