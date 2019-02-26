@@ -19,11 +19,6 @@ COPY . /home/ci-workshop-app
 
 FROM Base as Build
 
-# WORKDIR /home/ci-workshop-app
-# COPY . /home/ci-workshop-app
-# RUN ls -la /home/ci-workshop-app/bin
-
-# TODO: figure out why the line below doesn't work on windows
 RUN /home/ci-workshop-app/bin/train_model.sh
 
 CMD ["/home/ci-workshop-app/bin/start_server.sh"]
@@ -44,8 +39,6 @@ RUN git config --global credential.helper 'cache --timeout=36000'
 ARG user
 RUN useradd ${user:-root} -g root || true
 USER ${user:-root}
-
-RUN mkdir -p /home/${user}
 
 EXPOSE 8080
 CMD ["/home/ci-workshop-app/bin/start_server.sh"]

@@ -15,7 +15,7 @@ During the workshop, we will walk you through how to configure a CD pipeline for
 - Login to heroku by running: `heroku login` (complete authentication by clicking on the browser. if the browser doesn't open up automatically, you can copy and paste the link manually)
 - Create a heroku project for app (staging): `heroku create ci-workshop-app-<YOUR_NAME>-staging`
 - Create a heroku project for app (prod): `heroku create ci-workshop-app-<YOUR_NAME>-prod`
-- Windows users: please create it on the website. TODO: flesh out instructions
+- If you encounter problems creating the 2 apps using ther `heroku` cli, you can create the 2 apps on the heroku website: https://dashboard.heroku.com/new-app
 ___
 
 ### Let's build our CD pipeline!
