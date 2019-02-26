@@ -7,6 +7,7 @@ To get the optimal coding workflow, we often rely on intellisense and code compl
   - [VS Code](https://code.visualstudio.com/docs/python/environments#_select-and-activate-an-environment)
   - [PyCharm (community edition)](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html)
   - PyCharm (professional edition) users: you don't need this workaround. You can follow set up your IDE to use the virtual environment in the Docker container (see [instructions])(https://www.jetbrains.com/help/pycharm/using-docker-as-a-remote-interpreter.html)
+- configure autosave
 
 
 ### Common errors and how to solve them

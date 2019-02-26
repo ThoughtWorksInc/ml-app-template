@@ -19,6 +19,11 @@ COPY . /home/ci-workshop-app
 
 FROM Base as Build
 
+# WORKDIR /home/ci-workshop-app
+# COPY . /home/ci-workshop-app
+# RUN ls -la /home/ci-workshop-app/bin
+
+# TODO: figure out why the line below doesn't work on windows
 RUN /home/ci-workshop-app/bin/train_model.sh
 
 CMD ["/home/ci-workshop-app/bin/start_server.sh"]

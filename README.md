@@ -26,7 +26,15 @@ Before the workshop, please ensure you have done the following:
 
 1. **Fork** repository: https://github.com/davified/ci-workshop-app
 2. Clone repository: `git clone https://github.com/YOUR_USERNAME/ci-workshop-app`
+<<<<<<< HEAD
 3. Start Docker on your desktop (Note: Wait for Docker to complete startup before running the subsequent commands. You'll know when startup is completed when the docker icon in your taskbar stops animating)
+=======
+3. Start Docker on your desktop
+4. Edit the Dockerfile and replace `<your username>` and `<your email>` with your github username and email
+5. Build docker image: 
+  - Mac / Linux users: `docker build . -t ci-workshop-app --build-arg user=$(whoami)`
+  - Windows users: `MSYS_NO_PATHCONV=1 docker build . -t ci-workshop-app --build-arg user=$(whoami)`
+>>>>>>> Update windows instructions
 
 4. Docker commands (run this on your terminal)
 
@@ -43,9 +51,17 @@ $ docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app ba
 ```
 
 ```shell
+<<<<<<< HEAD
 ### Other useful docker commands ###
 # See list of running containers
 docker ps
+=======
+# Start interactive shell in container:
+# Mac/Linux users:
+docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
+# Windows users (add: `--platform linux` options):
+MSYS_NO_PATHCONV=1 winpty docker run -it -v /$(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
+>>>>>>> Update windows instructions
 
 # Start a bash shell in a running container when it’s running
 docker exec -it <container-id> bash
@@ -93,3 +109,21 @@ Once the CD pipeline is set up, you only need to `git add`, `git commit` and `gi
 #### Bonus: Deploying using Kubernetes
 
 Instructions [here](./docs/deploy_to_kubernetes.md)
+
+reply to https://stackoverflow.com/questions/52866657/the-source-path-is-not-found-and-not-know-to-docker with https://stackoverflow.com/questions/50608301/docker-mounted-volume-adds-c-to-end-of-windows-path-when-translating-from-linux
+
+
+if you encounter the following error:
+docker: Error response from daemon: driver failed programming external connectivity on endpoint zealous_rubin (f70ddf46807daed2b1a24e3f897af1dd587b97b30ef676c8fcdba40598756
+c49): Error starting userland proxy: mkdir /port/tcp:0.0.0.0:8080:tcp:172.17.0.2:8080: input/output error.
+
+solution: 
+1. restart docker
+2. Right click docker icon --> Settings --> Daemon --> ensure 'Experimental Features' is unchecked
+
+
+if after running build and/or mount volume, your docker container has no files, 
+TODO: find fix
+
+prefix all docker commands with MSYS_NO_PATHCONV=1
+e.g. MSYS_NO_PATHCONV=1 docker build . -t ci-workshop-app
