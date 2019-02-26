@@ -22,9 +22,11 @@ Before the workshop, please ensure you have done the following:
 - [Windows Users only] Install [git bash](https://gitforwindows.org/). We will be using `git bash` as the terminal for the workshop.
 
 ### Setup
-**Important notes for Windows users:**
+```
+# Note for Windows users:
 - If you're new to Docker, please use the Git Bash terminal to run the commands below
-- Please refer to [FAQs](./docs/FAQs.md) for a list of common errors that you may encounter and how to fix them.
+- If you encounter any errors, please refer to [FAQs](./docs/FAQs.md) for a list of common errors and how to fix them.
+```
 
 1. **Fork** repository: https://github.com/davified/ci-workshop-app
 2. Clone repository: `git clone https://github.com/YOUR_USERNAME/ci-workshop-app`

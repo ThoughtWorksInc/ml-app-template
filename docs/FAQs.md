@@ -10,7 +10,7 @@ To get the optimal coding workflow, we often rely on intellisense and code compl
 - configure autosave
 
 
-### Common errors and how to solve them
+### Common errors and how to fix them
 
 1. `docker run` causes the following error:
 ```shell
@@ -29,16 +29,16 @@ docker stop <container-id>
 # Now you can run `docker run` again
 ```
 
-#### [Windows users] Common errors
+### [Windows users] Common errors and how to fix them
 
 1. If you encounter the following error, when running `docker run ... -p 8080:8080 ...`:
 ```shell
 docker: Error response from daemon: driver failed programming external connectivity on endpoint zealous_rubin (f70ddf46807daed2b1a24e3f897af1dd587b97b30ef676c8fcdba40598756
 c49): Error starting userland proxy: mkdir /port/tcp:0.0.0.0:8080:tcp:172.17.0.2:8080: input/output error.
 
-solution: 
-1. Right click docker icon --> Settings --> Daemon --> Ensure 'Experimental Features' is unchecked
-2. Restart docker
+# Solution: 
+# 1. Right click docker icon --> Settings --> Daemon --> Ensure 'Experimental Features' is unchecked
+# 2. Restart docker
 ```
 
 2. You mounted a volume (e.g. `docker run -v /$(pwd):/home/`) but you don't see the mounted directory:
@@ -48,4 +48,4 @@ winpty docker run -it -v C:\\Users\\path\\to\\your\\ci-workshop-app:/home/ci-wor
 
 # Note: to find the full path, you can run `pwd` in the directory that you wish to mount, and manually replace forward slashes (/) with double backslashes (\\)
 ```
-This is an open issue in Docker for Windows that has to do with how Git Bash converts system filepath: https://github.com/docker/toolbox/issues/673
+This is an open issue in Docker for Windows that has to do with how Git Bash converts filepaths: https://github.com/docker/toolbox/issues/673
