@@ -11,32 +11,34 @@ This page demonstrates how you can deploy an app to Google Kubernetes Engine. To
 ### Steps:
 
 ```shell
-# build image:
-# docker build . -t [GCP_DOCKER_REPOSITORY]/[YOUR_PROJECT]/[CONTAINER_NAME]:[version]
-docker build . -t asia.gcr.io/ai-sg-workshop/my-app
+# 1. Provision kubernetes cluster
+bin/kubernetes/provision.sh
 
-# publish docker image
-docker push asia.gcr.io/ai-sg-workshop/my-app
+# 2. Get external ip address for your kubernetes cluster 
+# (you have to wait take a few minutes if you're running provision.sh for the first time)
+kubectl get services
 
-# [optional] test docker image locally
-docker run -it --rm -p 8080:8080 asia.gcr.io/ai-sg-workshop/my-app
-curl localhost:8080
+# 3. Test your app - Copy and paste the external ip from the previous command in the browser or REST client
 
-# create kubernetes cluster
-gcloud container clusters create my-cluster --region asia-southeast1
-
-# Create deployment
-kubectl apply -f bin/kubernetes/config/deployment.yml
-
-# Expose deployment to the public (by using a load balancer service)
-kubectl apply -f bin/kubernetes/config/service.yml
-
-# To make any changes after deployment
-kubectl apply -f bin/kubernetes/config/     # this applies the changes in any files the bin/kubernetes/config directory
+# 4. To deploy a new version of the app, CI will call the following script
+bin/kubernetes/deploy.sh
+# You can refer to .circleci/config.kubernetes.reference.yaml to see the CI pipeline
 ```
 
-Additional information:
-- after creating your cluster, if you encounter issues authenticating / communicating with your cluster, you can get authentication credentials to interact with the cluster by running: `gcloud container clusters get-credentials my-cluster --region asia-southeast1`
+Other commands:
+
+```shell
+# [optional] test docker image locally (use gcp_project_id and image_name as defined in provision.sh)
+docker run -it --rm -p 8080:8080 asia.gcr.io/$gcp_project_id/$image_name
+curl localhost:8080
+
+# If To make any changes after deployment
+kubectl apply -f bin/kubernetes/config/     # this applies the changes in any files the bin/kubernetes/config directory
+
+# After creating your cluster, if you encounter issues authenticating / communicating with your cluster, you can get authentication credentials to interact with the cluster by running:
+gcloud container clusters get-credentials my-cluster --region asia-southeast1
+
+```
 
 Further reading:
 - https://cloud.google.com/kubernetes-engine/docs/quickstart
