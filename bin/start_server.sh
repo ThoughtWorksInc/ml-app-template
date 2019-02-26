@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Use PORT environment variable if defined. Otherwise, default to 8080
 PORT="${PORT:-8080}"

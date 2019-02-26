@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 if [[ $CI == 'true' ]]; then
   source .venv/bin/activate
