@@ -7,26 +7,9 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/my-docker-image.tar
-      - run:
-          name: Load Docker image layer cache
-          command: docker load -i /caches/my-docker-image.tar || true
       - run:
           name: Build application Docker image (without ML model)
           command: docker build . -t ci-workshop-app:base --cache-from=ci-workshop-app:base --target Base
-      - run:
-          name: Save Docker image layer cache
-          command: |
-            mkdir -p /caches
-            docker save -o /caches/my-docker-image.tar ci-workshop-app:base
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /caches/my-docker-image.tar
       - run:
           name: run unit tests
           command: docker run ci-workshop-app:base bin/test.sh
