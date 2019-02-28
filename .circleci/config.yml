@@ -1,40 +1,48 @@
-# .circleci/config.yml
 version: 2
 jobs:
-  train_and_test:
+  build_and_test:
+    working_directory: ~/repo 
     docker:
-      - image: circleci/python:3.6.1
-    working_directory: ~/repo
+      - image: google/cloud-sdk
     steps:
-      - checkout              # checkout source code
-      - restore_cache:        # load cache (to save time)
-          keys:
-            - v1-dependencies-{{ checksum "requirements.txt" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+      - checkout
+      - setup_remote_docker
       - run:
-          name: install dependencies
-          command: bin/install_dependencies.sh
-      - save_cache:           # save cache (to save time)
-          paths:
-            - .venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+          name: Build application Docker image (without ML model)
+          command: docker build . -t ci-workshop-app:base --cache-from=ci-workshop-app:base --target Base
       - run:
           name: run unit tests
-          command: bin/test.sh
+          command: docker run ci-workshop-app:base bin/test.sh
       - run:
-          name: train model
-          command: bin/train_model.sh
+          name: Build application Docker image (with ML model)
+          command: docker build . -t ci-workshop-app:build --cache-from=ci-workshop-app:base --target Build
       - run:
           name: run model metrics tests
-          command: bin/test_model_metrics.sh
-      - persist_to_workspace:   # save artifact
-          root: .
-          paths:
-            - .
+          command: docker run ci-workshop-app:build bin/test_model_metrics.sh
+      - run: 
+          name: setup google cloud SDK + authenticate
+          command: bin/authenticate_gcloud.sh
+      - run:
+          name: push artifact to container registry
+          command: bin/save_artifact_on_gcr.sh
+  deploy_to_gcp:
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - checkout
+      - run: 
+          name: setup google cloud SDK + authenticate
+          command: bin/authenticate_gcloud.sh
+      - setup_remote_docker
+      - run:
+          name: Deploy image to kubernetes
+          command: bin/kubernetes/deploy.sh
 
 workflows:
   version: 2
   my_ci_pipeline:
     jobs:
-      - train_and_test
+      - build_and_test
+      - deploy_to_gcp:
+          requires:
+            - build_and_test
