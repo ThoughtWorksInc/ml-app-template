@@ -25,7 +25,7 @@ curl --request POST "$base_url/predict" \
                 "NOX": 0.538,
                 "PTRATIO": 15.3,
                 "RAD": 1.0,
-                "RM": 6.575,
+                "RM": 16.575,
                 "TAX": 296,
                 "ZN": 18 
               }'
