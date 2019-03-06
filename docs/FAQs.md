@@ -49,3 +49,12 @@ winpty docker run -it -v C:\\Users\\path\\to\\your\\ci-workshop-app:/home/ci-wor
 # Note: to find the full path, you can run `pwd` in the directory that you wish to mount, and manually replace forward slashes (/) with double backslashes (\\)
 ```
 This is an open issue in Docker for Windows that has to do with how Git Bash converts filepaths: https://github.com/docker/toolbox/issues/673
+
+3. You edited a shell script and tried to run it but got some error about invalid characters (^M)
+```shell
+# on git bash, convert line endings to unix endings
+dos2unix bin/my_file.sh
+
+# now you can execute your script
+bin/my_file.sh
+```
