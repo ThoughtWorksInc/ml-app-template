@@ -1,4 +1,4 @@
-import os
+import os, logging
 
 import joblib
 import pandas as pd
@@ -10,7 +10,9 @@ model = joblib.load('models/model.joblib')
 
 @app.route('/', methods=['GET'])
 def hello_world():
-    return jsonify({"response": "this is a bad model!"})
+    print('hello world!!')
+    logging.log(logging.DEBUG, 'hello world!!!')
+    return jsonify({"response": "hello world!"})
 
 @app.route('/predict', methods=['POST'])
 def predict():
