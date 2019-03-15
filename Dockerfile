@@ -47,4 +47,4 @@ USER ${user:-root}
 EXPOSE 8080
 CMD ["/home/ci-workshop-app/bin/start_server.sh"]
 
-# To run all stages: docker build . -t ci-workshop-app:build  --build-arg user=$(whoami)
+# To run all stages: docker build . -t ci-workshop-app:build --build-arg user=$(whoami)
