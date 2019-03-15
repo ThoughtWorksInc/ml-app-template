@@ -27,7 +27,7 @@ ARG user
 RUN useradd ${user:-root} -g root || true
 USER ${user:-root}
 
-ARG var_name
+ARG CI
 ENV CI=$CI
 
 CMD ["/home/ci-workshop-app/bin/start_server.sh"]
