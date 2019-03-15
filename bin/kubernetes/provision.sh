@@ -4,7 +4,7 @@ set -e
 gcp_project_id='ai-sg-workshop'
 image_name='ci-workshop-app'
 region='asia-southeast1'
-cluster_name='my-cluster'
+cluster_name='app-cluster'
 
 # build image
 docker build . -t asia.gcr.io/$gcp_project_id/$image_name --target Build
