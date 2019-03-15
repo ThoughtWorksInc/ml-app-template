@@ -21,10 +21,6 @@ COPY . /home/ci-workshop-app
 
 FROM Base as Build
 
-ARG user
-RUN useradd ${user:-root} -g root || true
-USER ${user:-root}
-
 ARG CI
 ENV CI=$CI
 
@@ -41,6 +37,10 @@ FROM Build as Dev
 
 RUN apt-get install -y gnupg \
   && curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+
+ARG user
+RUN useradd ${user:-root} -g root || true
+USER ${user:-root}
 
 COPY requirements-dev.txt /home/ci-workshop-app/requirements-dev.txt
 RUN pip install -r /home/ci-workshop-app/requirements-dev.txt
