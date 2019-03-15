@@ -27,7 +27,7 @@ else:
 
 with mlflow.start_run() as run:
     # define hyperparameters
-    N_ESTIMATORS = 6
+    N_ESTIMATORS = 12
     MAX_DEPTH = 5
 
     # train model
