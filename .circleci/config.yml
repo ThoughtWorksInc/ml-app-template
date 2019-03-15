@@ -15,10 +15,10 @@ jobs:
           command: docker run ci-workshop-app:base bin/test.sh
       - run:
           name: Build application Docker image (with ML model)
-          command: docker build . -t ci-workshop-app:build --target Build --build-arg user=$(whoami)
+          command: docker build . -t ci-workshop-app:build --target Build --build-arg user=$(whoami) CI
       - run:
           name: run model metrics tests
-          command: docker run ci-workshop-app:build bin/test_model_metrics.sh -e CI='true' 
+          command: docker run ci-workshop-app:build bin/test_model_metrics.sh
       - run: 
           name: setup google cloud SDK + authenticate
           command: bin/authenticate_gcloud.sh
