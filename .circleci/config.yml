@@ -15,7 +15,6 @@ jobs:
           command: docker run ci-workshop-app:base bin/test.sh
       - run:
           name: Build application Docker image (with ML model)
-          # command: docker build . -t ci-workshop-app:build --target Build --build-arg user=$(whoami) --build-arg CI
           command: docker build . -t ci-workshop-app:build --target Build --build-arg user=circleci --build-arg CI=true
       - run:
           name: run model metrics tests
