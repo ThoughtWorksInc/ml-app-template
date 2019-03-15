@@ -27,6 +27,9 @@ ARG user
 RUN useradd ${user:-root} -g root || true
 USER ${user:-root}
 
+ARG var_name
+ENV CI=$CI
+
 CMD ["/home/ci-workshop-app/bin/start_server.sh"]
 
 # To run first 2 stages: docker build . -t ci-workshop-app:build --target Build
