@@ -27,8 +27,8 @@ else:
 
 with mlflow.start_run() as run:
     # define hyperparameters
-    N_ESTIMATORS = 10
-    MAX_DEPTH = 10
+    N_ESTIMATORS = 6
+    MAX_DEPTH = 5
 
     # train model
     model = RandomForestRegressor(n_estimators=N_ESTIMATORS, max_depth=MAX_DEPTH)
