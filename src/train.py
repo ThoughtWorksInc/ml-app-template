@@ -20,10 +20,6 @@ x_train, x_test, y_train, y_test = train_test_split(x, y)
 
 # configure mlflow
 mlflow.set_tracking_uri(uri='http://35.240.197.5:5000')
-print('=== CircleCI env vars')
-print(os.environ)
-print("os.environ.get('CI', '') == 'true'")
-print(os.environ.get('CI', '') == 'true')
 if os.environ.get('CI', '') == 'true':
     mlflow.set_experiment('CI')
 else:
@@ -31,8 +27,8 @@ else:
 
 with mlflow.start_run() as run:
     # define hyperparameters
-    N_ESTIMATORS = 2
-    MAX_DEPTH = 2
+    N_ESTIMATORS = 10
+    MAX_DEPTH = 10
 
     # train model
     model = RandomForestRegressor(n_estimators=N_ESTIMATORS, max_depth=MAX_DEPTH)
