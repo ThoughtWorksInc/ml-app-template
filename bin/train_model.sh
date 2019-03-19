@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
 
-echo "Training ML model..."
-python src/train.py
+SHOULD_USE_MLFLOW=false python src/train.py
 echo "Model training complete."

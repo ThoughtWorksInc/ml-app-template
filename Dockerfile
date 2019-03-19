@@ -13,8 +13,6 @@ RUN pip install -r requirements.txt
 
 COPY . /home/ci-workshop-app
 
-# To run the first stage: docker build . -t ci-workshop-app:base --target Base
-
 # ================================================================= #
 # ------------ Second stage in our multistage Dockerfile ---------- #
 # ================================================================= #
@@ -28,8 +26,6 @@ RUN /home/ci-workshop-app/bin/train_model.sh
 
 CMD ["/home/ci-workshop-app/bin/start_server.sh"]
 
-# To run first 2 stages: docker build . -t ci-workshop-app:build --target Build
-
 # ================================================================= #
 # ------------ Third stage in our multistage Dockerfile ----------- #
 # ================================================================= #
@@ -38,16 +34,15 @@ FROM Build as Dev
 RUN apt-get install -y gnupg \
   && curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 
-ARG user
-RUN useradd ${user:-root} -g root || true
-USER ${user:-root}
-
 COPY requirements-dev.txt /home/ci-workshop-app/requirements-dev.txt
 RUN pip install -r /home/ci-workshop-app/requirements-dev.txt
 
 RUN git config --global credential.helper 'cache --timeout=36000'
 
 EXPOSE 8080
-CMD ["/home/ci-workshop-app/bin/start_server.sh"]
 
-# To run all stages: docker build . -t ci-workshop-app:build --build-arg user=$(whoami)
+ARG user
+RUN useradd ${user:-root} -g root || true
+USER ${user:-root}
+
+CMD ["/home/ci-workshop-app/bin/start_server.sh"]

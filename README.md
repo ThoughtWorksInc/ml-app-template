@@ -62,7 +62,7 @@ source bin/color_my_terminal.sh
 nosetests
 
 # Train model
-python src/train.py
+SHOULD_USE_MLFLOW=false python src/train.py
 
 # Start flask app
 python src/app.py
