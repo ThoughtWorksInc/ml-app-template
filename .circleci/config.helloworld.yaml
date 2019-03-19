@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  hello_world:
+    docker:
+      - image: circleci/python:3.6.1
+    working_directory: ~/repo
+    steps:
+      - run:
+          name: hello
+          command: echo "HELLO WORLD!!!"
+      - run:
+          name: bye
+          command: echo "GOODBYE!!!"
+
+workflows:
+  version: 2
+  my_ci_pipeline:
+    jobs:
+      - hello_world
