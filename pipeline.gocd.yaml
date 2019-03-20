@@ -8,6 +8,7 @@ pipelines:
         git: https://github.com/davified/ci-workshop-app.git
     stages:
       - build: # name of stage
+          elastic_profile_id: demo-app
           jobs:
             build: # name of the job
               tasks:
