@@ -1,0 +1,50 @@
+format_version: 3
+# environments:
+#   testing:
+#     environment_variables:
+#       DEPLOYMENT: testing
+#     secure_variables:
+#       ENV_PASSWORD: "s&Du#@$xsSa"
+#     pipelines:
+#       - example-deploy-testing
+#       - build-testing
+pipelines:
+  my_ci_pipeline:
+    group: demo_group
+    label_template: "${my_git[:8]}"
+    lock_behavior: none
+    parameters:
+      param1: value1  # list of parameters that can be configured for a pipeline
+    materials:
+      my_git:
+        git: https://github.com/ThoughtWorksInc/ci-workshop-app.git
+        branch: master
+    stages:
+      - build_test:
+          clean_workspace: true
+          jobs:
+            build:
+              # artifacts:
+              # - external:
+              #     id: docker-release-candidate
+              #     store_id: dockerhub  # configure this for gcr.io
+              #     configuration:
+              #       options:
+              #         Image: gocd/gocd-demo
+              #         Tag: v${GO_PIPELINE_LABEL}
+              #       secure_options:
+              #         some_secure_property: "!@ESsdD323#sdu"
+              tasks:
+              - exec:
+                  command: /bin/bash
+                  arguments:
+                    - -c
+                    - docker build . -t ci-workshop-app:build --target Build --build-arg CI=true
+              - exec:
+                  command: /bin/bash
+                  arguments:
+                    - -c
+                    - docker run ci-workshop-app:build bin/test_model_metrics.sh
+              - script: bin/authenticate_gcloud.sh # setup google cloud SDK + authenticate 
+              - script: bin/save_artifact_on_gcr.sh # push artifact to container registry
+              - script: bin/kubernetes/deploy.sh # deploy image to kubernetes  # should be moved to a second stage
