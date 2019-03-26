@@ -8,9 +8,9 @@ pipelines:
         git: https://github.com/ThoughtWorksInc/ci-workshop-app.git
     stages:
       - build: # name of stage
-          elastic_profile_id: demo-app
           jobs:
             build: # name of the job
+              elastic_profile_id: demo-app
               tasks:
                - exec: # indicates type of task
                    command: echo "hello world"
