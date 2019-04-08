@@ -16,4 +16,4 @@ pipelines:
                    command: bash
                    arguments:
                    - -c
-                   - echo "hello world"
+                   - docker build . -t ci-workshop-app:base --target Base
