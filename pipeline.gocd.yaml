@@ -17,3 +17,14 @@ pipelines:
                    arguments:
                    - -c
                    - docker build . -t ci-workshop-app:base --target Base
+      - unit_test:
+          clean_workspace: true
+          jobs:
+            unit_test:
+              elastic_profile_id: demo-app
+              tasks:
+               - exec:
+                   command: bash
+                   arguments:
+                   - -c
+                   - docker run ci-workshop-app:base bin/test.sh
