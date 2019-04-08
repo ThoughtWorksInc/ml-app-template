@@ -17,6 +17,16 @@ pipelines:
                    arguments:
                    - -c
                    - docker build . -t ci-workshop-app:base --target Base
+              artifacts:
+              - external:
+                  id: docker-release-candidate
+                  store_id: dockerhub
+                  configuration:
+                    options:
+                      Image: davified/ci-workshop-app
+                      Tag: v${GO_PIPELINE_LABEL}
+                    secure_options:
+                      some_secure_property: ""
       - unit_test:
           clean_workspace: true
           jobs:
