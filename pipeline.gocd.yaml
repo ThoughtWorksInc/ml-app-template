@@ -22,6 +22,14 @@ pipelines:
                   arguments:
                   - -c
                   - docker run davified/ci-workshop-app:latest bin/test.sh
+              - exec:
+                  command: bash
+                  - -c
+                  - docker build . -t davified/ci-workshop-app:latest --target BuildWithMLModel
+              - exec:
+                  command: bash
+                  - -c
+                  - docker run davified/ci-workshop-app:latest bin/test_model_metrics.sh
               artifacts:  # artifacts#build
               - external:
                   id: docker-release-candidate
@@ -32,6 +40,15 @@ pipelines:
                       Tag: latest # v${GO_PIPELINE_LABEL}
                     secure_options:
                       some_secure_property: ""
+
+
+# # save artifact
+
+# # deploy-to-staging
+# docker run my_image:build bin/deploy_kubernetes_staging.sh
+
+# # deploy-to-prod
+# docker run my_image:build bin/deploy_kubernetes_prod.sh
 
 
 # questions:
