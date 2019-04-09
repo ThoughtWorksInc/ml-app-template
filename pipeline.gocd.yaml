@@ -16,17 +16,17 @@ pipelines:
                    command: bash
                    arguments:
                    - -c
-                   - docker build . -t davified/ci-workshop-app:base --target Base
-              # artifacts:  # artifacts#build
-              # - external:
-              #     id: docker-release-candidate
-              #     store_id: dockerhub # artifact store id (configured on gocd)
-              #     configuration:
-              #       options:
-              #         Image: davified/ci-workshop-app
-              #         Tag: v${GO_PIPELINE_LABEL}
-              #       secure_options:
-              #         some_secure_property: ""
+                   - docker build . -t davified/ci-workshop-app --target Base
+              artifacts:  # artifacts#build
+              - external:
+                  id: docker-release-candidate
+                  store_id: dockerhub # artifact store id (configured on gocd)
+                  configuration:
+                    options:
+                      Image: davified/ci-workshop-app
+                      Tag: v${GO_PIPELINE_LABEL}
+                    secure_options:
+                      some_secure_property: ""
       - unit_test:
           clean_workspace: true
           jobs:
@@ -37,7 +37,7 @@ pipelines:
                    command: bash
                    arguments:
                    - -c
-                   - docker run davified/ci-workshop-app:base bin/test.sh
+                   - docker run davified/ci-workshop-app bin/test.sh
 
 
 # questions:
