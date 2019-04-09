@@ -6,17 +6,22 @@ pipelines:
       demo_git:  # this is the name of material
         git: https://github.com/ThoughtWorksInc/ci-workshop-app.git
     stages:
-      - build: # name of stage
+      - commit: # name of stage
           clean_workspace: true
           jobs:
-            build: # name of the job
+            build_and_test: # name of the job
               elastic_profile_id: demo-app
               tasks:
-               - exec: # indicates type of task
-                   command: bash
-                   arguments:
-                   - -c
-                   - docker build . -t davified/ci-workshop-app --target Base
+              - exec: # indicates type of task
+                  command: bash
+                  arguments:
+                  - -c
+                  - docker build . -t davified/ci-workshop-app:latest --target Base
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - docker run davified/ci-workshop-app:latest bin/test.sh
               artifacts:  # artifacts#build
               - external:
                   id: docker-release-candidate
@@ -24,20 +29,9 @@ pipelines:
                   configuration:
                     options:
                       Image: davified/ci-workshop-app
-                      Tag: v${GO_PIPELINE_LABEL}
+                      Tag: latest # v${GO_PIPELINE_LABEL}
                     secure_options:
                       some_secure_property: ""
-      - unit_test:
-          clean_workspace: true
-          jobs:
-            unit_test:
-              elastic_profile_id: demo-app
-              tasks:
-               - exec:
-                   command: bash
-                   arguments:
-                   - -c
-                   - docker run davified/ci-workshop-app bin/test.sh
 
 
 # questions:
