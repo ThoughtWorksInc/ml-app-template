@@ -17,16 +17,16 @@ pipelines:
                    arguments:
                    - -c
                    - docker build . -t davified/ci-workshop-app:base --target Base
-              artifacts:
-              - external:
-                  id: docker-release-candidate
-                  store_id: dockerhub # artifact store id (configured on gocd)
-                  configuration:
-                    options:
-                      Image: davified/ci-workshop-app
-                      Tag: v${GO_PIPELINE_LABEL}
-                    secure_options:
-                      some_secure_property: ""
+              # artifacts:  # artifacts#build
+              # - external:
+              #     id: docker-release-candidate
+              #     store_id: dockerhub # artifact store id (configured on gocd)
+              #     configuration:
+              #       options:
+              #         Image: davified/ci-workshop-app
+              #         Tag: v${GO_PIPELINE_LABEL}
+              #       secure_options:
+              #         some_secure_property: ""
       - unit_test:
           clean_workspace: true
           jobs:
@@ -43,6 +43,6 @@ pipelines:
 # questions:
 # - how to cache docker image locally so that we don't have to build from scratch in the first stage everytime?
 # - how to configure external artifact store (dockerhub) using yaml? i.e. how to automate the instructions here https://docs.gocd.org/current/gocd_on_kubernetes/designing_a_cd_pipeline/creating_a_build_pipeline.html
-
+# - storing secure variables: https://api.gocd.org/current/#encryption
 # references 
 # - https://pnguyen.io/posts/a-sample-gocd-pipeline and https://github.com/hpcsc/sample-pipeline-backend
