@@ -18,7 +18,7 @@ Note:
 
 ```shell
 # [Mac/Linux users]
-docker build . -t ci-workshop-app
+docker build . -t ci-workshop-app --build-arg user=$(whoami)
 
 # [Windows users]
 MSYS_NO_PATHCONV=1 docker build . -t ci-workshop-app --build-arg user=$(whoami)
@@ -28,7 +28,7 @@ MSYS_NO_PATHCONV=1 docker build . -t ci-workshop-app --build-arg user=$(whoami)
 
 ```shell
 # [Mac/Linux users]
-docker run -it -p 8080:8080 ci-workshop-app bash
+docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
 
 # [Windows users]
 winpty docker run -it -v C:\\Users\\path\\to\\your\\ci-workshop-app:/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
