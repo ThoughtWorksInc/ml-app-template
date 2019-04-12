@@ -31,6 +31,9 @@ CMD ["/home/ci-workshop-app/bin/start_server.sh"]
 # ================================================================= #
 FROM Build as Dev
 
+RUN apt-get install -y gnupg \
+  && curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+
 COPY requirements-dev.txt /home/ci-workshop-app/requirements-dev.txt
 RUN pip install -r /home/ci-workshop-app/requirements-dev.txt
 
