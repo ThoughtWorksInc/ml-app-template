@@ -5,9 +5,9 @@ pipelines:
     materials:
       demo_git:  # this is the name of material
         git: https://github.com/ThoughtWorksInc/ci-workshop-app.git
-      docker_artifact:
-        pipeline: demo_ci_pipeline
-        stage: commit
+      # docker_artifact:
+      #   pipeline: demo_ci_pipeline
+      #   stage: commit
     stages:
       - commit: # name of stage
           clean_workspace: true
@@ -47,11 +47,15 @@ pipelines:
                       some_secure_property: ""
       - deploy_staging:
           clean_workspace: true
-          fetch_materials: yes
           jobs:
             deploy_staging:
               elastic_profile_id: demo-app
               tasks:
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - docker pull davified/ci-workshop-app
               - exec:
                   command: bash
                   arguments:
