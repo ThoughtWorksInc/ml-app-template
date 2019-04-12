@@ -49,13 +49,8 @@ pipelines:
           clean_workspace: true
           jobs:
             deploy_staging:
-              elastic_profile_id: demo-app
+              elastic_profile_id: docker-dind-kubectl
               tasks:
-              - exec:
-                  command: bash
-                  arguments:
-                  - -c
-                  - docker pull davified/ci-workshop-app
               - exec:
                   command: bash
                   arguments:
