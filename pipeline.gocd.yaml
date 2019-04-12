@@ -42,9 +42,33 @@ pipelines:
                       Tag: latest # v${GO_PIPELINE_LABEL}
                     secure_options:
                       some_secure_property: ""
+      - deploy_staging:
+          clean_workspace: true
+          jobs:
+            deploy_staging:
+              elastic_profile_id: demo-app
+              tasks:
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - apt-get install -y kubectl
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - kubectl set image deployment/ml-cd-starter-kit-ci-workshop-app-chart ci-workshop-app=davified/ci-workshop-app:latest
 
-
-# # save artifact
 
 # # deploy-to-staging
 # docker run my_image:build bin/deploy_kubernetes_staging.sh
