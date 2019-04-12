@@ -25,7 +25,7 @@ pipelines:
               - exec:
                   command: bash
                   - -c
-                  - docker build . -t davified/ci-workshop-app:latest --target BuildWithMLModel
+                  - docker build . -t davified/ci-workshop-app:latest --target Build
               - exec:
                   command: bash
                   - -c
