@@ -24,10 +24,12 @@ pipelines:
                   - docker run davified/ci-workshop-app:latest bin/test.sh
               - exec:
                   command: bash
+                  arguments:
                   - -c
                   - docker build . -t davified/ci-workshop-app:latest --target Build
               - exec:
                   command: bash
+                  arguments:
                   - -c
                   - docker run davified/ci-workshop-app:latest bin/test_model_metrics.sh
               artifacts:  # artifacts#build
