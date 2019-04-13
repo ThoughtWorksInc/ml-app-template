@@ -94,14 +94,4 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - echo "listing directory contents -- " && ls -la
-              - exec:
-                  command: bash
-                  arguments:
-                  - -c
-                  - echo "contents of metadata/docker_image_tag.txt -- " && cat metadata/docker_image_tag.txt
-              - exec:
-                  command: bash
-                  arguments:
-                  - -c
                   - docker run davified/ci-workshop-app:$(cat metadata/docker_image_tag.txt) bin/test_model_metrics.sh
