@@ -20,30 +20,30 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - docker build . -t davified/ci-workshop-app:$IMAGE_TAG --target Base
+                  - docker build . -t davified/ci-workshop-app:${IMAGE_TAG} --target Base
               - exec:
                   command: bash
                   arguments:
                   - -c
-                  - docker run davified/ci-workshop-app:$IMAGE_TAG bin/test.sh
+                  - docker run davified/ci-workshop-app:${IMAGE_TAG} bin/test.sh
               - exec:
                   command: bash
                   arguments:
                   - -c
-                  - docker build . -t davified/ci-workshop-app:$IMAGE_TAG --target Build
+                  - docker build . -t davified/ci-workshop-app:${IMAGE_TAG} --target Build
               - exec:
                   command: bash
                   arguments:
                   - -c
-                  - docker run davified/ci-workshop-app:$IMAGE_TAG bin/test_model_metrics.sh
-              artifacts:  # artifacts#build
+                  - docker run davified/ci-workshop-app:${IMAGE_TAG} bin/test_model_metrics.sh
+              artifacts:
               - external:
                   id: docker-release-candidate
-                  store_id: dockerhub # artifact store id (configured on gocd)
+                  store_id: dockerhub # artifact store id (configured on gocd UI)
                   configuration:
                     options:
                       Image: davified/ci-workshop-app
-                      Tag: $IMAGE_TAG # v${GO_PIPELINE_LABEL}
+                      Tag: ${IMAGE_TAG}
       - deploy_staging:
           clean_workspace: true
           jobs:
@@ -54,4 +54,4 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - kubectl set image deployment/ml-cd-starter-kit-ci-workshop-app-chart ci-workshop-app-chart=davified/ci-workshop-app:$IMAGE_TAG # ci-workshop-app-chart is the name of the chart in ml-cd-starter-kit
+                  - kubectl set image deployment/ml-cd-starter-kit-ci-workshop-app-chart ci-workshop-app-chart=davified/ci-workshop-app:${IMAGE_TAG} # ci-workshop-app-chart is the name of the chart in ml-cd-starter-kit
