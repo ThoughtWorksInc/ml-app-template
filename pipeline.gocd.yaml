@@ -1,4 +1,3 @@
-# simple.gocd.yaml
 pipelines:
   demo_ci_pipeline:
     group: demo_group
@@ -9,7 +8,7 @@ pipelines:
       #   pipeline: demo_ci_pipeline
       #   stage: commit
     environment_variables:
-      IMAGE_TAG: v${GO_PIPELINE_LABEL}
+      IMAGE_TAG: "v${GO_PIPELINE_LABEL}"
     stages:
       - commit: # name of stage
           clean_workspace: true
