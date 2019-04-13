@@ -8,43 +8,43 @@ pipelines:
       # docker_artifact:
       #   pipeline: demo_ci_pipeline
       #   stage: commit
+    environment_variables:
+      IMAGE_TAG: v${GO_PIPELINE_LABEL}
     stages:
-      # - commit: # name of stage
-      #     clean_workspace: true
-      #     jobs:
-      #       build_and_test: # name of the job
-      #         elastic_profile_id: demo-app
-      #         tasks:
-      #         - exec: # indicates type of task
-      #             command: bash
-      #             arguments:
-      #             - -c
-      #             - docker build . -t davified/ci-workshop-app:latest --target Base
-      #         - exec:
-      #             command: bash
-      #             arguments:
-      #             - -c
-      #             - docker run davified/ci-workshop-app:latest bin/test.sh
-      #         - exec:
-      #             command: bash
-      #             arguments:
-      #             - -c
-      #             - docker build . -t davified/ci-workshop-app:latest --target Build
-      #         - exec:
-      #             command: bash
-      #             arguments:
-      #             - -c
-      #             - docker run davified/ci-workshop-app:latest bin/test_model_metrics.sh
-      #         artifacts:  # artifacts#build
-      #         - external:
-      #             id: docker-release-candidate
-      #             store_id: dockerhub # artifact store id (configured on gocd)
-      #             configuration:
-      #               options:
-      #                 Image: davified/ci-workshop-app
-      #                 Tag: latest # v${GO_PIPELINE_LABEL}
-      #               secure_options:
-      #                 some_secure_property: ""
+      - commit: # name of stage
+          clean_workspace: true
+          jobs:
+            build_and_test: # name of the job
+              elastic_profile_id: demo-app
+              tasks:
+              - exec: # indicates type of task
+                  command: bash
+                  arguments:
+                  - -c
+                  - docker build . -t davified/ci-workshop-app:$IMAGE_TAG --target Base
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - docker run davified/ci-workshop-app:$IMAGE_TAG bin/test.sh
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - docker build . -t davified/ci-workshop-app:$IMAGE_TAG --target Build
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - docker run davified/ci-workshop-app:$IMAGE_TAG bin/test_model_metrics.sh
+              artifacts:  # artifacts#build
+              - external:
+                  id: docker-release-candidate
+                  store_id: dockerhub # artifact store id (configured on gocd)
+                  configuration:
+                    options:
+                      Image: davified/ci-workshop-app
+                      Tag: $IMAGE_TAG # v${GO_PIPELINE_LABEL}
       - deploy_staging:
           clean_workspace: true
           jobs:
@@ -55,4 +55,4 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - kubectl set image deployment/ml-cd-starter-kit-ci-workshop-app-chart ci-workshop-app-chart=davified/ci-workshop-app:latest # ci-workshop-app-chart is the name of the chart in ml-cd-starter-kit
+                  - kubectl set image deployment/ml-cd-starter-kit-ci-workshop-app-chart ci-workshop-app-chart=davified/ci-workshop-app:$IMAGE_TAG # ci-workshop-app-chart is the name of the chart in ml-cd-starter-kit
