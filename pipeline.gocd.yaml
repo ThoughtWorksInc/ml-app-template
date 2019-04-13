@@ -7,7 +7,7 @@ pipelines:
       # docker_artifact:
       #   pipeline: demo_ci_pipeline
       #   stage: commit
-    environment_variables:
+    # environment_variables:
       # IMAGE_TAG: "v${GO_PIPELINE_LABEL}"
     stages:
       - commit: # name of stage
