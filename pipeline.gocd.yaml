@@ -78,12 +78,18 @@ pipelines:
         pipeline: demo_ci_pipeline
         stage: commit
     stages:
-      - commit:
+      - default_stage:
           clean_workspace: true
           jobs:
-            build_and_test:
+            default_job:
               elastic_profile_id: demo-app
               tasks:
+              - fetch:
+                  pipeline: demo_ci_pipeline
+                  stage: commit
+                  job: build_and_test
+                  source: metadata
+                  destination: .
               - exec:
                   command: bash
                   arguments:
