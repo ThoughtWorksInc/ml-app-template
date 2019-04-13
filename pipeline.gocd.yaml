@@ -55,4 +55,4 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - kubectl set image deployment/ml-cd-starter-kit-ci-workshop-app-chart ci-workshop-app=davified/ci-workshop-app:latest
+                  - kubectl set image deployment/ml-cd-starter-kit-ci-workshop-app-chart ci-workshop-app-chart=davified/ci-workshop-app:latest # ci-workshop-app-chart is the name of the chart in ml-cd-starter-kit
