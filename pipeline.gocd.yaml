@@ -71,7 +71,7 @@ pipelines:
                   arguments:
                   - -c
                   - kubectl set image deployment/ml-cd-starter-kit-ci-workshop-app-chart ci-workshop-app-chart=davified/ci-workshop-app:v${GO_PIPELINE_LABEL} # ci-workshop-app-chart is the name of the chart in ml-cd-starter-kit
-  evaluate_model:
+  evaluate_model:   # second pipeline
     group: demo_group
     materials:
       myupstream:
@@ -88,7 +88,7 @@ pipelines:
                   pipeline: demo_ci_pipeline
                   stage: commit
                   job: build_and_test
-                  source: metadata
+                  source: metadata/docker_image_tag.txt
                   destination: .
               - exec:
                   command: bash
