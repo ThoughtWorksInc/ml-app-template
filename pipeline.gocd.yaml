@@ -88,7 +88,7 @@ pipelines:
                   pipeline: demo_ci_pipeline
                   stage: commit
                   job: build_and_test
-                  source: metadata/docker_image_tag.txt
+                  source: metadata
                   destination: .
               - exec:
                   command: bash
@@ -99,9 +99,9 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - echo "contents of docker_image_tag.txt -- " && cat docker_image_tag.txt
+                  - echo "contents of metadata/docker_image_tag.txt -- " && cat metadata/docker_image_tag.txt
               - exec:
                   command: bash
                   arguments:
                   - -c
-                  - docker run davified/ci-workshop-app:$(cat docker_image_tag.txt) bin/test_model_metrics.sh
+                  - docker run davified/ci-workshop-app:$(cat metadata/docker_image_tag.txt) bin/test_model_metrics.sh
