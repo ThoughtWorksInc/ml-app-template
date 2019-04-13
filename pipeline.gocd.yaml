@@ -31,6 +31,11 @@ pipelines:
                   arguments:
                   - -c
                   - docker run davified/ci-workshop-app:v${GO_PIPELINE_LABEL} bin/test_model_metrics.sh
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - echo "v${GO_PIPELINE_LABEL}" > docker_image_tag.txt
               artifacts:
               - external:
                   id: docker-release-candidate
@@ -39,6 +44,9 @@ pipelines:
                     options:
                       Image: davified/ci-workshop-app
                       Tag: v${GO_PIPELINE_LABEL}
+              - build:
+                  source: docker_image_tag.txt
+                  destination: metadata # destination directory is relative to the artifacts folder on go server
       - deploy_staging:
           clean_workspace: true
           jobs:
@@ -63,3 +71,31 @@ pipelines:
                   arguments:
                   - -c
                   - kubectl set image deployment/ml-cd-starter-kit-ci-workshop-app-chart ci-workshop-app-chart=davified/ci-workshop-app:v${GO_PIPELINE_LABEL} # ci-workshop-app-chart is the name of the chart in ml-cd-starter-kit
+  evaluate_model:
+    group: demo_group
+    materials:
+      myupstream:
+        pipeline: demo_ci_pipeline
+        stage: commit
+    stages:
+      - commit:
+          clean_workspace: true
+          jobs:
+            build_and_test:
+              elastic_profile_id: demo-app
+              tasks:
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - echo "listing directory contents -- " && ls -la
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - echo "contents of docker_image_tag.txt -- " && cat docker_image_tag.txt
+              - exec:
+                  command: bash
+                  arguments:
+                  - -c
+                  - docker run davified/ci-workshop-app:$(cat docker_image_tag.txt) bin/test_model_metrics.sh
