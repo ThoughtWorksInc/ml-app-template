@@ -2,13 +2,8 @@ pipelines:
   demo_ci_pipeline:
     group: demo_group
     materials:
-      demo_git:  # this is the name of material
+      demo_git: # name of material
         git: https://github.com/ThoughtWorksInc/ci-workshop-app.git
-      # docker_artifact:
-      #   pipeline: demo_ci_pipeline
-      #   stage: commit
-    # environment_variables:
-      # IMAGE_TAG: "v${GO_PIPELINE_LABEL}"
     stages:
       - commit: # name of stage
           clean_workspace: true
