@@ -1,6 +1,10 @@
 pipelines:
   demo_ci_pipeline:
     group: demo_group
+    environment_variables:
+      VAR_A: hello a
+    secure_variables:
+      DOCKER_PASSWORD: "AES:z5pRhJQUwgzBggku3htQbw==:p7Y9m7avnQIw/ywSut4S2Q=="
     materials:
       demo_git: # name of material
         git: https://github.com/ThoughtWorksInc/ci-workshop-app.git
@@ -11,39 +15,44 @@ pipelines:
             build_and_test: # name of the job
               elastic_profile_id: demo-app
               tasks:
-              - exec: # indicates type of task
-                  command: bash
-                  arguments:
-                  - -c
-                  - docker build . -t davified/ci-workshop-app:v${GO_PIPELINE_LABEL} --target Base
+              # Temporarily skip build and test
+              # - exec: # indicates type of task
+              #     command: bash
+              #     arguments:
+              #     - -c
+              #     - docker build . -t davified/ci-workshop-app:v${GO_PIPELINE_LABEL} --target Base
+              # - exec:
+              #     command: bash
+              #     arguments:
+              #     - -c
+              #     - docker run davified/ci-workshop-app:v${GO_PIPELINE_LABEL} bin/test.sh
+              # - exec:
+              #     command: bash
+              #     arguments:
+              #     - -c
+              #     - docker build . -t davified/ci-workshop-app:v${GO_PIPELINE_LABEL} --target Build
+              # - exec:
+              #     command: bash
+              #     arguments:
+              #     - -c
+              #     - docker run davified/ci-workshop-app:v${GO_PIPELINE_LABEL} bin/test_model_metrics.sh
+
+              # Docker login and push
               - exec:
                   command: bash
                   arguments:
                   - -c
-                  - docker run davified/ci-workshop-app:v${GO_PIPELINE_LABEL} bin/test.sh
+                  - echo $DOCKER_PASSWORD | docker login --username davified --password-stdin
               - exec:
                   command: bash
                   arguments:
                   - -c
-                  - docker build . -t davified/ci-workshop-app:v${GO_PIPELINE_LABEL} --target Build
-              - exec:
-                  command: bash
-                  arguments:
-                  - -c
-                  - docker run davified/ci-workshop-app:v${GO_PIPELINE_LABEL} bin/test_model_metrics.sh
+                  - docker push davified/ci-workshop-app:v${GO_PIPELINE_LABEL}
               - exec:
                   command: bash
                   arguments:
                   - -c
                   - echo "v${GO_PIPELINE_LABEL}" > docker_image_tag.txt
-              artifacts:
-              - external:
-                  id: docker-release-candidate
-                  store_id: dockerhub # artifact store id (configured on gocd UI)
-                  configuration:
-                    options:
-                      Image: davified/ci-workshop-app
-                      Tag: v${GO_PIPELINE_LABEL}
               - build:
                   source: docker_image_tag.txt
                   destination: metadata # destination directory is relative to the artifacts folder on go server
