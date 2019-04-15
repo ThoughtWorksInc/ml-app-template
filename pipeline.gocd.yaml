@@ -53,6 +53,7 @@ pipelines:
                   arguments:
                   - -c
                   - echo "v${GO_PIPELINE_LABEL}" > docker_image_tag.txt
+              artifacts:
               - build:
                   source: docker_image_tag.txt
                   destination: metadata # destination directory is relative to the artifacts folder on go server
