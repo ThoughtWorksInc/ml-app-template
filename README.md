@@ -1,5 +1,8 @@
 # ml-app-template
 
+TODO:
+- find and replace 'davified'?
+
 An ML project template with sensible defaults:
 - Dockerised dev setup
 - Unit test setup
@@ -68,6 +71,9 @@ docker ps
 
 # start a bash shell in a running container
 docker exec -it <container-id> bash
+
+# starting jupyter notebook server on http://localhost:8888
+jupyter notebook --ip 0.0.0.0 --no-browser --allow-root
 ```
 
 ## What's in this repo?
