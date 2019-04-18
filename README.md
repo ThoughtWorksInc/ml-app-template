@@ -1,6 +1,6 @@
 # `ml-app-template`
 
-A ML project template with sensible defaults:
+An ML project template with sensible defaults:
 - Dockerised dev setup
 - Unit test setup
 - Automated tests for model metrics
