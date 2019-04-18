@@ -6,6 +6,8 @@ A ML project template with sensible defaults:
 - Automated tests for model metrics
 - CI pipeline as code
 
+For infrastructure-related stuff (e.g. provisioning of CI server, deployments, etc.), please refer to https://github.com/ThoughtWorksInc/ml-cd-starter-kit.
+
 ## Getting started
 
 1. Fork repository: https://github.com/davified/ml-app-template
