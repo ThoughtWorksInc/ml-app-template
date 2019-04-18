@@ -14,8 +14,8 @@ data = datasets.load_boston()
 
 # preprocess data
 x = pd.DataFrame(data.data, columns=data.feature_names)
-column_order = x.columns
 y = pd.DataFrame(data.target, columns=["MEDV"])
+column_order = x.columns
 x_train, x_test, y_train, y_test = train_test_split(x, y)
 
 # train model

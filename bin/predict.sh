@@ -4,7 +4,7 @@ set -e
 if [[ $1 == '' ]]; then
   echo "[ERROR] Usage: $0 <URL>"
   echo "[ERROR] Example: $0 http://localhost:8080"
-  echo "[ERROR] Example: $0 http://my-app.herokuapp.com"
+  echo "[ERROR] Example: $0 http://my.app.ip.com:SOME_PORT"
   echo "[ERROR] Exiting..."
   exit 1
 else
