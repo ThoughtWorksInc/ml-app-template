@@ -3,7 +3,7 @@ pipelines:
     group: demo_group
     materials:
       demo_git: # name of material
-        git: https://github.com/ThoughtWorksInc/ci-workshop-app.git
+        git: https://github.com/ThoughtWorksInc/ml-app-template.git
     stages:
       - commit: # name of stage
           clean_workspace: true
@@ -15,22 +15,22 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - docker build . -t davified/ci-workshop-app:v${GO_PIPELINE_LABEL} --target Base
+                  - docker build . -t davified/ml-app-template:v${GO_PIPELINE_LABEL} --target Base
               - exec:
                   command: bash
                   arguments:
                   - -c
-                  - docker run davified/ci-workshop-app:v${GO_PIPELINE_LABEL} bin/test.sh
+                  - docker run davified/ml-app-template:v${GO_PIPELINE_LABEL} bin/test.sh
               - exec:
                   command: bash
                   arguments:
                   - -c
-                  - docker build . -t davified/ci-workshop-app:v${GO_PIPELINE_LABEL} --target Build
+                  - docker build . -t davified/ml-app-template:v${GO_PIPELINE_LABEL} --target Build
               - exec:
                   command: bash
                   arguments:
                   - -c
-                  - docker run davified/ci-workshop-app:v${GO_PIPELINE_LABEL} bin/test_model_metrics.sh
+                  - docker run davified/ml-app-template:v${GO_PIPELINE_LABEL} bin/test_model_metrics.sh
               - exec:
                   command: bash
                   arguments:
@@ -42,7 +42,7 @@ pipelines:
                   store_id: dockerhub # artifact store id (configured on gocd UI)
                   configuration:
                     options:
-                      Image: davified/ci-workshop-app
+                      Image: davified/ml-app-template
                       Tag: v${GO_PIPELINE_LABEL}
               - build:
                   source: docker_image_tag.txt
@@ -57,7 +57,7 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - kubectl set image deployment/ml-cd-starter-kit-ci-workshop-app-chart ci-workshop-app-chart=davified/ci-workshop-app:v${GO_PIPELINE_LABEL} # ci-workshop-app-chart is the name of the chart in ml-cd-starter-kit
+                  - kubectl set image deployment/ml-cd-starter-kit-ml-app-template-chart ml-app-template-chart=davified/ml-app-template:v${GO_PIPELINE_LABEL} # ml-app-template-chart is the name of the chart in ml-cd-starter-kit
       - deploy_prod:
           clean_workspace: true
           approval:
@@ -70,7 +70,7 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - kubectl set image deployment/ml-cd-starter-kit-ci-workshop-app-chart ci-workshop-app-chart=davified/ci-workshop-app:v${GO_PIPELINE_LABEL} # ci-workshop-app-chart is the name of the chart in ml-cd-starter-kit
+                  - kubectl set image deployment/ml-cd-starter-kit-ml-app-template-chart ml-app-template-chart=davified/ml-app-template:v${GO_PIPELINE_LABEL} # ml-app-template-chart is the name of the chart in ml-cd-starter-kit
   # second pipeline
   evaluate_model:   
     group: demo_group
@@ -95,4 +95,4 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - docker run davified/ci-workshop-app:$(cat metadata/docker_image_tag.txt) bin/test_model_metrics.sh
+                  - docker run davified/ml-app-template:$(cat metadata/docker_image_tag.txt) bin/test_model_metrics.sh

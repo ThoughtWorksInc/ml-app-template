@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ci-workshop-app-deployment
+  name: ml-app-template-deployment
   labels:
-    app: ci-workshop-app
+    app: ml-app-template
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ci-workshop-app
+      app: ml-app-template
   template:
     metadata:
       labels:
-        app: ci-workshop-app
+        app: ml-app-template
     spec:
       containers:
-      - name: ci-workshop-app
-        image: asia.gcr.io/ai-sg-workshop/ci-workshop-app
+      - name: ml-app-template
+        image: asia.gcr.io/ai-sg-workshop/ml-app-template
         command: ["bin/start_server.sh"]

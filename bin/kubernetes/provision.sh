@@ -2,7 +2,7 @@
 set -e
 
 gcp_project_id='ai-sg-workshop'
-image_name='ci-workshop-app'
+image_name='ml-app-template'
 region='asia-southeast1'
 cluster_name='app-cluster'
 

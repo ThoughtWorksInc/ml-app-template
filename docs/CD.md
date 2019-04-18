@@ -5,16 +5,16 @@ During the workshop, we will walk you through how to configure a CD pipeline for
 ### Steps to do before the workshop
 - Create CircleCI account: https://circleci.com/ (free)
 - Create heroku account: https://heroku.com/ (free)
-- Fork this repository: https://github.com/davified/ci-workshop-app
+- Fork this repository: https://github.com/davified/ml-app-template
 
 ### One-time manual steps
 #### CircleCI
-- Create circleci project. Visit https://circleci.com/dashboard, login and click on 'Add Projects' on the left panel. Click on 'Set up project' for `ci-workshop-app`
+- Create circleci project. Visit https://circleci.com/dashboard, login and click on 'Add Projects' on the left panel. Click on 'Set up project' for `ml-app-template`
 
 #### Heroku
 - Login to heroku by running: `heroku login` (complete authentication by clicking on the browser. if the browser doesn't open up automatically, you can copy and paste the link manually)
-- Create a heroku project for app (staging): `heroku create ci-workshop-app-<YOUR_NAME>-staging`
-- Create a heroku project for app (prod): `heroku create ci-workshop-app-<YOUR_NAME>-prod`
+- Create a heroku project for app (staging): `heroku create ml-app-template-<YOUR_NAME>-staging`
+- Create a heroku project for app (prod): `heroku create ml-app-template-<YOUR_NAME>-prod`
 - If you encounter problems creating the 2 apps using ther `heroku` cli, you can create the 2 apps on the heroku website: https://dashboard.heroku.com/new-app
 ___
 
@@ -69,7 +69,7 @@ Let's extend to pipeline to (i) run unit tests, (ii) train the model, and (iii) 
   - `bin/train_model.sh`
   - `bin/test_model_metrics.sh`
 - Get a feel of what each bash script is doing by running them:
-  - Start a bash terminal in your container: `docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash`
+  - Start a bash terminal in your container: `docker run -it -v $(pwd):/home/ml-app-template -p 8080:8080 ml-app-template bash`
   - In the terminal, run each of the 3 scripts above (e.g. `bin/test.sh`)
 - Copy and paste the following snippet in `.circleci/config.yml`
 - git add, commit and push your changes to your repository
@@ -128,7 +128,7 @@ Let's deploy our app to staging and production!
   - `bin/deploy_to_heroku.sh` - we wrote this script. this is how you can deploy an app to heroku
   - `Procfile` - This is a simple shell script which heroku will run when it starts your application
 - Copy and paste the following snippet in `.circleci/config.yml`. Note:
-  - Replace `ci-workshop-app-bob-staging` and `ci-workshop-app-bob-prod` with the names of your staging and prod apps
+  - Replace `ml-app-template-bob-staging` and `ml-app-template-bob-prod` with the names of your staging and prod apps
   - Keep the `train_and_test` configuration which you pasted in your previous task.
   - Ensure indentation matches what you pasted in your previous task! Otherwise CircleCI will not be happy.
 - git add, commit and push your changes to your repository
@@ -148,7 +148,7 @@ jobs:
           at: .
       - run:
           name: deploy app to staging
-          command: bin/deploy_to_heroku.sh ci-workshop-app-bob-staging
+          command: bin/deploy_to_heroku.sh ml-app-template-bob-staging
   deploy_prod:
     docker:
       - image: circleci/python:3.6.1
@@ -157,7 +157,7 @@ jobs:
           at: .
       - run:
           name: deploy app to prod
-          command: bin/deploy_to_heroku.sh ci-workshop-app-bob-prod
+          command: bin/deploy_to_heroku.sh ml-app-template-bob-prod
 
 
 workflows:

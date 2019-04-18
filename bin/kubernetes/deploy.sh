@@ -3,8 +3,8 @@ set -ex
 
 GOOGLE_PROJECT_ID='ai-sg-workshop'
 GOOGLE_COMPUTE_REGION='asia-southeast1'
-IMAGE_NAME='ci-workshop-app'
-DEPLOYMENT_NAME='ci-workshop-app-deployment'
+IMAGE_NAME='ml-app-template'
+DEPLOYMENT_NAME='ml-app-template-deployment'
 CLUSTER_NAME='app-cluster'
 
 # authenticate the agent running this command (depends on GCLOUD_SERVICE_KEY environment variable to be set)

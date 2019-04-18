@@ -9,16 +9,16 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build application Docker image (without ML model)
-          command: docker build . -t ci-workshop-app:base --target Base
+          command: docker build . -t ml-app-template:base --target Base
       - run:
           name: run unit tests
-          command: docker run ci-workshop-app:base bin/test.sh
+          command: docker run ml-app-template:base bin/test.sh
       - run:
           name: Build application Docker image (with ML model)
-          command: docker build . -t ci-workshop-app:build --target Build --build-arg CI=true
+          command: docker build . -t ml-app-template:build --target Build --build-arg CI=true
       - run:
           name: run model metrics tests
-          command: docker run ci-workshop-app:build bin/test_model_metrics.sh
+          command: docker run ml-app-template:build bin/test_model_metrics.sh
       - run: 
           name: setup google cloud SDK + authenticate
           command: bin/authenticate_gcloud.sh

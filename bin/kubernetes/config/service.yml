@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ci-workshop-app-service
+  name: ml-app-template-service
   labels:
-    run: ci-workshop-app
+    run: ml-app-template
 spec:
   type: LoadBalancer
   ports:
@@ -11,4 +11,4 @@ spec:
     targetPort: 8080
     protocol: TCP
   selector:
-    app: ci-workshop-app
+    app: ml-app-template

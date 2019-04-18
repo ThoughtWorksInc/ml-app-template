@@ -44,7 +44,7 @@ c49): Error starting userland proxy: mkdir /port/tcp:0.0.0.0:8080:tcp:172.17.0.2
 2. You mounted a volume (e.g. `docker run -v /$(pwd):/home/`) but you don't see the mounted directory:
 ```shell
 # solution: replace /$(pwd) with the full path to the directory that you wish to mount:
-winpty docker run -it -v C:\\Users\\path\\to\\your\\ci-workshop-app:/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
+winpty docker run -it -v C:\\Users\\path\\to\\your\\ml-app-template:/home/ml-app-template -p 8080:8080 ml-app-template bash
 
 # Note: to find the full path, you can run `pwd` in the directory that you wish to mount, and manually replace forward slashes (/) with double backslashes (\\)
 ```

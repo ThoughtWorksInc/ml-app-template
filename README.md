@@ -1,93 +1,79 @@
-# Continuous Intelligence Workshop
+# `ml-app-template`
 
-A demo on how to apply continuous delivery principles to train, test and deploy ML models.
+A ML project template with sensible defaults:
+- Dockerised dev setup
+- Unit test setup
+- Automated tests for model metrics
+- CI pipeline as code
 
-### Setup
+## Getting started
 
-Note:
-- If you encounter any errors, please refer to [FAQs](./docs/FAQs.md) for a list of common errors and how to fix them.
-- [Windows users] If you're new to Docker, please use Git Bash to run the commands below
+Note: Setup instructions for Windows users can be found [here](./docs/workshop_setup.md)
 
-**Setup instructions**
-
-1. Please ensure you've completed the [pre-requisite setup](./docs/pre-requisites.md)
-2. Fork repository: https://github.com/davified/ci-workshop-app
-3. Clone repository: `git clone https://github.com/YOUR_USERNAME/ci-workshop-app`
-4. Start Docker on your desktop (Note: Wait for Docker to complete startup before running the subsequent commands. You'll know when startup is completed when the docker icon in your taskbar stops animating)
-5. Build docker image
-
-```shell
-# [Mac/Linux users]
-docker build . -t ci-workshop-app --build-arg user=$(whoami)
-
-# [Windows users]
-MSYS_NO_PATHCONV=1 docker build . -t ci-workshop-app --build-arg user=$(whoami)
-```
-
-6. Start docker container
+1. Fork repository: https://github.com/davified/ml-app-template
+2. Clone repository: `git clone https://github.com/YOUR_USERNAME/ml-app-template`
+3. Install Docker ([Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
+4. Start Docker on your desktop
+5. Build image and start container:
 
 ```shell
-# [Mac/Linux users]
-docker run -it -v $(pwd):/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
+# build docker image
+docker build . -t ml-app-template --build-arg user=$(whoami)
 
-# [Windows users]
-winpty docker run -it -v C:\\Users\\path\\to\\your\\ci-workshop-app:/home/ci-workshop-app -p 8080:8080 ci-workshop-app bash
-# Note: to find the path, you can run `pwd` in git bash, and manually replace forward slashes (/) with double backslashes (\\)
-
+# start docker container
+docker run -it  -v $(pwd):/home/ml-app-template \
+                -p 8080:8080 \
+                -p 8888:8888 \
+                ml-app-template bash
 ```
 
-```diff
-! Pre-workshop setup stops here
-```
+## Common commands
+
+Here are some common commands that you can run in your dev workflow. Run these in the container.
 
 ```shell
-### Other useful docker commands ###
-# See list of running containers
-docker ps
-
-# Start a bash shell in a running container when it’s running
-docker exec -it <container-id> bash
-```
-
-Now you're ready to roll!
-
-
-### Common commands (run these in the container)
-
-```shell
-# Add some color to your terminal
+# add some color to your terminal
 source bin/color_my_terminal.sh
 
-# Run unit tests
+# run unit tests
 nosetests
 
-# Train model
+# run unit tests in watch mode and color output
+nosetests --with-watch --rednose --nologcapture
+
+# train model
 SHOULD_USE_MLFLOW=false python src/train.py
 
-# Start flask app
+# start flask app
 python src/app.py
 
-# Make requests to your app
+# make requests to your app
 # 1. In your browser, visit http://localhost:8080
-# 2. In another terminal in the container, run:
+# 2. Open another terminal in the running container (detailed instructions below) and run:
 bin/predict.sh http://localhost:8080
 
 # You can also use this script to test your deployed application later:
-bin/predict.sh http://my-app.herokuapp.com
+bin/predict.sh http://my-app.com
+```
+
+### Other useful docker commands ###
+```shell
+# see list of running containers
+docker ps
+
+# start a bash shell in a running container when it’s running
+docker exec -it <container-id> bash
 ```
 
 ### IDE configuration
 
-Please refer to [FAQs](./docs/FAQs.md) for instructions on configuring VS Code or PyCharm.
+Please refer to [FAQs](./FAQs.md) for instructions on how to configure VS Code or PyCharm to give you intellisense and auto-complete suggestions as yo ucode..
 
-### Set up CD pipeline
+## References
+- [Workshop instructions](./docs/workshop_setup.md)
 
-Instructions for setting up your CD pipeline are in [docs/CD.md](./docs/CD.md). To keep this example simple, we will deploy to heroku.
+TODO:
+- replace ml-app-template with `ml-app-template` everywhere
 
-Once the CD pipeline is set up, you only need to `git add`, `git commit` and `git push` your code changes, and the CD pipeline will do everything (train, test, deploy) for you.
-
-#### Bonus: Set up CD pipeline
-
-You can also configure your CD pipeline to deploy using kubernetes instead. See instructions [here](./docs/deploy_to_kubernetes.md)
 
 

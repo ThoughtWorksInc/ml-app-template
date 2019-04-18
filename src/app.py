@@ -10,7 +10,7 @@ model = joblib.load('models/model.joblib')
 
 @app.route('/', methods=['GET'])
 def hello_world():
-    return jsonify({"response": "bad model"})
+    return jsonify({"response": "hello ml-app-template!"})
 
 @app.route('/predict', methods=['POST'])
 def predict():
