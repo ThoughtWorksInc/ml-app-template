@@ -31,9 +31,6 @@ CMD ["/home/ml-app-template/bin/start_server.sh"]
 # ================================================================= #
 FROM Build as Dev
 
-RUN apt-get install -y gnupg \
-  && curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-
 COPY requirements-dev.txt /home/ml-app-template/requirements-dev.txt
 RUN pip install -r /home/ml-app-template/requirements-dev.txt
 
