@@ -70,11 +70,50 @@ docker ps
 docker exec -it <container-id> bash
 ```
 
-### Troubleshooting
+## What's in this repo?
 
-If you encounter any errors, please refer to [FAQs](./docs/FAQs.md) for a list of common errors and how to fix them.
+We've created a project template to help you with the boilerplate code that we usually have to write in any typical project.
 
-### IDE configuration
+To reduce incidental complexity, we used a simple dataset (boston housing prices) to train a simple linear regression model. Replace the (i) data, (ii) data preprocessing code and (iii) model specification for your use case.
+
+This is the project structure:
+
+```sh
+.
+├── Dockerfile
+├── README.md
+├── requirements-dev.txt              # specify dev dependencies (e.g. jupyter) here
+├── requirements.txt                  # specify app dependencies here
+├── pipeline.gocd.yaml                # specify your CI pipeline here
+└── src                               # place your code here
+    ├── app.py
+    ├── app_with_logging.py
+    ├── tests                         # place your tests here
+    │   ├── test.py
+    │   └── test_model_metrics.py
+    └── train.py
+├── bin                               # store shell scripts here
+│   ├── color_my_terminal.sh
+│   ├── configure_venv_locally.sh
+│   ├── predict.sh
+│   ├── start_server.sh
+│   ├── test.sh
+│   ├── test_model_metrics.sh
+│   └── train_model.sh
+├── docs
+│   ├── FAQs.md
+│   └── mlflow.md
+├── models                            # serialize stuff here
+│   ├── _keep
+│   ├── column_order.joblib
+│   └── model.joblib
+
+```
+
+## IDE configuration
 
 Please refer to [FAQs](./FAQs.md) for instructions on how to configure VS Code or PyCharm to give you intellisense and auto-complete suggestions as you code.
 
+## Troubleshooting
+
+If you encounter any errors, please refer to [FAQs](./docs/FAQs.md) for a list of common errors and how to fix them.
