@@ -27,9 +27,7 @@ docker run -it  -v $(pwd):/home/ml-app-template \
                 ml-app-template bash
 ```
 
-## Common commands
-
-Here are some common commands that you can run in your dev workflow. Run these in the container.
+You're ready to roll! Here are some common commands that you can run in your dev workflow. Run these in the container.
 
 ```shell
 # add some color to your terminal
@@ -56,24 +54,18 @@ bin/predict.sh http://localhost:8080
 bin/predict.sh http://my-app.com
 ```
 
-### Other useful docker commands ###
+Here are some other commands that you may find useful
 ```shell
 # see list of running containers
 docker ps
 
-# start a bash shell in a running container when it’s running
+# start a bash shell in a running container
 docker exec -it <container-id> bash
 ```
 
 ### IDE configuration
 
-Please refer to [FAQs](./FAQs.md) for instructions on how to configure VS Code or PyCharm to give you intellisense and auto-complete suggestions as yo ucode..
+Please refer to [FAQs](./FAQs.md) for instructions on how to configure VS Code or PyCharm to give you intellisense and auto-complete suggestions as you code.
 
-## References
-- [Workshop instructions](./docs/workshop_setup.md)
-
-TODO:
-- replace ml-app-template with `ml-app-template` everywhere
-
-
-
+## Other resources
+- [Workshop instructions](./docs/workshop_setup.md). Please refer to this if you're using this repo as a workshop attendee
