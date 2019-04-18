@@ -8,8 +8,6 @@ A ML project template with sensible defaults:
 
 ## Getting started
 
-Note: Setup instructions for Windows users can be found [here](./docs/workshop_setup.md)
-
 1. Fork repository: https://github.com/davified/ml-app-template
 2. Clone repository: `git clone https://github.com/YOUR_USERNAME/ml-app-template`
 3. Install Docker ([Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
@@ -17,14 +15,21 @@ Note: Setup instructions for Windows users can be found [here](./docs/workshop_s
 5. Build image and start container:
 
 ```shell
-# build docker image
+# build docker image [Mac/Linux users]
 docker build . -t ml-app-template --build-arg user=$(whoami)
 
-# start docker container
+# build docker image [Windows users]
+MSYS_NO_PATHCONV=1 docker build . -t ml-app-template --build-arg user=$(whoami)
+
+# start docker container [Mac/Linux users]
 docker run -it  -v $(pwd):/home/ml-app-template \
                 -p 8080:8080 \
                 -p 8888:8888 \
                 ml-app-template bash
+
+# start docker container [Windows users]
+winpty docker run -it -v C:\\Users\\path\\to\\your\\ml-app-template:/home/ml-app-template -p 8080:8080 -p 8888:8888 ml-app-template bash
+# Note: to find the path, you can run `pwd` in git bash, and manually replace forward slashes (/) with double backslashes (\\)
 ```
 
 You're ready to roll! Here are some common commands that you can run in your dev workflow. Run these in the container.
@@ -63,9 +68,11 @@ docker ps
 docker exec -it <container-id> bash
 ```
 
+### Troubleshooting
+
+If you encounter any errors, please refer to [FAQs](./docs/FAQs.md) for a list of common errors and how to fix them.
+
 ### IDE configuration
 
 Please refer to [FAQs](./FAQs.md) for instructions on how to configure VS Code or PyCharm to give you intellisense and auto-complete suggestions as you code.
 
-## Other resources
-- [Workshop instructions](./docs/workshop_setup.md). Please refer to this if you're using this repo as a workshop attendee
