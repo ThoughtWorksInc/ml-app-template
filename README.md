@@ -1,4 +1,4 @@
-# `ml-app-template`
+# ml-app-template
 
 An ML project template with sensible defaults:
 - Dockerised dev setup
