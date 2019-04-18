@@ -84,7 +84,7 @@ This is the project structure:
 ├── README.md
 ├── requirements-dev.txt              # specify dev dependencies (e.g. jupyter) here
 ├── requirements.txt                  # specify app dependencies here
-├── pipeline.gocd.yaml                # specify your CI pipeline here
+├── ci.gocd.yaml                      # specify your CI pipeline here
 └── src                               # place your code here
     ├── app.py
     ├── app_with_logging.py
