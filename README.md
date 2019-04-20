@@ -1,8 +1,5 @@
 # ml-app-template
 
-TODO:
-- find and replace 'davified'?
-
 An ML project template with sensible defaults:
 - Dockerised dev setup
 - Unit test setup
@@ -13,7 +10,7 @@ For infrastructure-related stuff (e.g. provisioning of CI server, deployments, e
 
 ## Getting started
 
-1. Fork repository: https://github.com/davified/ml-app-template
+1. Fork repository: https://github.com/ThoughtWorksInc/ml-app-template
 2. Clone repository: `git clone https://github.com/YOUR_USERNAME/ml-app-template`
 3. Install Docker ([Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
 4. Start Docker on your desktop
@@ -125,7 +122,9 @@ Please refer to [FAQs](./FAQs.md) for instructions on how to configure VS Code o
 
 To provision the infrastructure used in this repo (e.g. GoCD, MLFlow, EFK), please check out the [`ml-cd-starter-kit`](https://github.com/ThoughtWorksInc/ml-cd-starter-kit) repo and follow the instrutions in the README.
 
-When you're done, update the environment variables in `src/settings.py`.
+When you're done setting up the infrastructure, do the following:
+- in `src/settings.py`, update the ip addresses with that of your own infrastructure.
+- in `ci.gocd.yaml`, replace `davified/ml-app-template` with `YOUR_USERNAME/YOUR_IMAGE_NAME`
 
 ## Troubleshooting
 
