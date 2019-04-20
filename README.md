@@ -97,6 +97,7 @@ This is the project structure:
     ├── tests                         # place your tests here
     │   ├── test.py
     │   └── test_model_metrics.py
+    └── settings.py                   # define environment variables here
     └── train.py
 ├── bin                               # store shell scripts here
 │   ├── color_my_terminal.sh

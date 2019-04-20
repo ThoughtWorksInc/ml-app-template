@@ -34,7 +34,7 @@ joblib.dump(column_order, 'models/column_order.joblib')
 if settings.SHOULD_USE_MLFLOW == 'true':
     # log training run to mlflow
     mlflow.set_tracking_uri(uri=f'http://{settings.MLFLOW_IP}:5000')
-    if settings.CI:
+    if settings.CI == 'true':
         mlflow.set_experiment('CI')
     else:
         mlflow.set_experiment('dev')
