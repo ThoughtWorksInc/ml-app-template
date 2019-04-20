@@ -9,6 +9,8 @@ from sklearn import datasets, metrics
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 
+import settings
+
 # load data
 data = datasets.load_boston()
 
@@ -29,10 +31,10 @@ model = model.fit(x_train, y_train.values.ravel())
 joblib.dump(model, 'models/model.joblib') 
 joblib.dump(column_order, 'models/column_order.joblib')
 
-if os.environ.get('SHOULD_USE_MLFLOW', '') == 'true':
+if settings.SHOULD_USE_MLFLOW == 'true':
     # log training run to mlflow
-    mlflow.set_tracking_uri(uri='http://35.240.197.5:5000')
-    if os.environ.get('CI', '') == 'true':
+    mlflow.set_tracking_uri(uri=f'http://{settings.MLFLOW_IP}:5000')
+    if settings.CI:
         mlflow.set_experiment('CI')
     else:
         mlflow.set_experiment('dev')

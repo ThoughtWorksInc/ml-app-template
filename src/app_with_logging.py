@@ -54,8 +54,8 @@ def predict():
     return jsonify({'predicted price (thousands)': prediction})
 
 if __name__ == '__main__':    
-    port = os.environ.get('PORT', 8080)
-    if port == 8080:
-        app.run(port=port, host='0.0.0.0', debug=True)
+    import settings
+    if settings.PORT == 8080:
+        app.run(port=settings.PORT, host='0.0.0.0', debug=True)
     else:
         app.run()
