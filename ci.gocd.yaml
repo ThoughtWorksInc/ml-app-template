@@ -57,7 +57,7 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - kubectl set image deployment/ml-cd-starter-kit-ml-app-template-chart ml-app-template-chart=davified/ml-app-template:v${GO_PIPELINE_LABEL} # ml-app-template-chart is the name of the chart in ml-cd-starter-kit
+                  - kubectl set image deployment/ml-cd-starter-kit-ml-app-template ml-app-template=davified/ml-app-template:v${GO_PIPELINE_LABEL} # ml-app-template is the name of the chart in ml-cd-starter-kit
       - deploy_prod:
           clean_workspace: true
           approval:
@@ -70,7 +70,7 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - kubectl set image deployment/ml-cd-starter-kit-ml-app-template-chart ml-app-template-chart=davified/ml-app-template:v${GO_PIPELINE_LABEL} # ml-app-template-chart is the name of the chart in ml-cd-starter-kit
+                  - kubectl set image deployment/ml-cd-starter-kit-ml-app-template ml-app-template=davified/ml-app-template:v${GO_PIPELINE_LABEL} # ml-app-template is the name of the chart in ml-cd-starter-kit
   # second pipeline
   evaluate_model:   
     group: demo_group
