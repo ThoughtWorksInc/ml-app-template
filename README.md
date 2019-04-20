@@ -52,7 +52,7 @@ nosetests --with-watch --rednose --nologcapture
 # train model
 SHOULD_USE_MLFLOW=false python src/train.py
 
-# start flask app
+# start flask app in development mode
 python src/app.py
 
 # make requests to your app
@@ -120,6 +120,12 @@ This is the project structure:
 ## IDE configuration
 
 Please refer to [FAQs](./FAQs.md) for instructions on how to configure VS Code or PyCharm to give you intellisense and auto-complete suggestions as you code.
+
+## Infrastructure
+
+To provision the infrastructure used in this repo (e.g. GoCD, MLFlow, EFK), please check out the [`ml-cd-starter-kit`](https://github.com/ThoughtWorksInc/ml-cd-starter-kit) repo and follow the instrutions in the README.
+
+When you're done, update the environment variables in `src/settings.py`.
 
 ## Troubleshooting
 
