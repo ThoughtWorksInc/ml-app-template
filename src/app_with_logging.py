@@ -10,6 +10,8 @@ import numpy as np
 import lime
 import lime.lime_tabular
 
+from src import settings
+
 app = Flask(__name__)
 column_order = joblib.load('models/column_order.joblib') 
 model = joblib.load('models/model.joblib') 
@@ -40,7 +42,9 @@ def predict():
 
     prediction = model.predict(input_features.values.tolist()).tolist()[0]
 
-    logger = sender.FluentSender('app', host='host.docker.internal', port=24224)
+    # logger = sender.FluentSender('app', host='ml-cd-starter-kit-fluentd', port=24224)
+    print(settings.ELASTIC_STACK_INTERNAL_DNS)
+    logger = sender.FluentSender('app', host=settings.ELASTIC_STACK_INTERNAL_DNS, port=24220)
     feature_names = column_order.tolist()
     feature_values = input_features.values.tolist()[0]
     lime_feature_contributions = lime_explain(feature_values)
