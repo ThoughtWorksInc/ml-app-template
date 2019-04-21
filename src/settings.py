@@ -1,5 +1,5 @@
 import os
-SHOULD_USE_MLFLOW='true'
+SHOULD_USE_MLFLOW='false'
 PORT=8080
 # CI is defined as 'true' in ci.gocd.yaml
 CI=os.environ.get('CI', '')
