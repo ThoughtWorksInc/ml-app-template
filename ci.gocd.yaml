@@ -70,7 +70,7 @@ pipelines:
                   command: bash
                   arguments:
                   - -c
-                  - kubectl set image deployment/ml-cd-starter-kit-ml-app-template ml-app-template=davified/ml-app-template:v${GO_PIPELINE_LABEL} # ml-app-template is the name of the chart in ml-cd-starter-kit
+                  - kubectl set image deployment/ml-cd-starter-kit-prod-ml-app-template ml-app-template=davified/ml-app-template:v${GO_PIPELINE_LABEL}  # update the container used by deployment/ml-cd-starter-kit-PROD-ml-app-template
   # second pipeline
   evaluate_model:   
     group: demo_group
