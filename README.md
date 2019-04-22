@@ -90,7 +90,7 @@ This is the project structure:
 ├── ci.gocd.yaml                      # specify your CI pipeline here
 └── src                               # place your code here
     ├── app.py
-    ├── app_with_logging.py
+    ├── app_with_logging.py           
     ├── tests                         # place your tests here
     │   ├── test.py
     │   └── test_model_metrics.py
@@ -113,6 +113,8 @@ This is the project structure:
 │   └── model.joblib
 
 ```
+
+For logging, `app_with_logging.py` contains the code for logging (i) inputs to the model, (ii) model outputs and (iii) [LIME](https://github.com/marcotcr/lime) metrics. You can refer to this file to send logs to elasticsearch using fluentd. To keep the main app simple to accessible to people who may not be familiar with these technologies, we've kept it in a separate file `app_with_logging.py` for reference.
 
 ## IDE configuration
 
