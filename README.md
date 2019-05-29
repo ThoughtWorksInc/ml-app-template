@@ -12,9 +12,11 @@ For infrastructure-related stuff (e.g. provisioning of CI server, deployments, e
 
 1. Fork repository: https://github.com/ThoughtWorksInc/ml-app-template
 2. Clone repository: `git clone https://github.com/YOUR_USERNAME/ml-app-template`
-3. Install Docker ([Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
-4. Start Docker on your desktop
-5. Build image and start container:
+3. To develop on local environement with installed Python packages, run: `pipenv install` then activiate environment with `pipenv shell` 
+    3.b. to run anything without activating the virtual environment, for example, nosetests, try `pipenv run nosetests`
+4. Install Docker ([Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
+5. Start Docker on your desktop
+6. Build image and start container:
 
 ```shell
 # build docker image [Mac/Linux users]
