@@ -12,7 +12,7 @@ For infrastructure-related stuff (e.g. provisioning of CI server, deployments, e
 
 1. Fork repository: https://github.com/ThoughtWorksInc/ml-app-template
 2. Clone repository: `git clone https://github.com/YOUR_USERNAME/ml-app-template`
-3. To develop on local environement with installed Python packages, run: `pipenv install` then activiate environment with `pipenv shell` 
+3. To develop on local environment with installed Python packages, run: `pipenv install` then activate environment with `pipenv shell` 
     3.b. to run anything without activating the virtual environment, for example, nosetests, try `pipenv run nosetests`
 4. Install Docker ([Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
 5. Start Docker on your desktop
@@ -20,10 +20,10 @@ For infrastructure-related stuff (e.g. provisioning of CI server, deployments, e
 
 ```shell
 # build docker image [Mac/Linux users]
-docker build . -t ml-app-template --build-arg user=$(whoami)
+docker build . -t ml-app-template
 
 # build docker image [Windows users]
-MSYS_NO_PATHCONV=1 docker build . -t ml-app-template --build-arg user=$(whoami)
+MSYS_NO_PATHCONV=1 docker build . -t ml-app-template
 
 # start docker container [Mac/Linux users]
 docker run -it  -v $(pwd):/home/ml-app-template \
@@ -41,6 +41,9 @@ You're ready to roll! Here are some common commands that you can run in your dev
 ```shell
 # add some color to your terminal
 source bin/color_my_terminal.sh
+
+# activate virtual environment for python
+pipenv shell
 
 # run unit tests
 nosetests

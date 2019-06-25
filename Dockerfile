@@ -46,8 +46,4 @@ RUN git config --global credential.helper 'cache --timeout=36000'
 
 EXPOSE 8080
 
-ARG user
-RUN useradd ${user:-root} -g root || true
-USER ${user:-root}
-
 CMD ["pipenv run /home/ml-app-template/bin/start_server.sh"]
